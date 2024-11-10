@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("com.google.devtools.ksp") version "2.0.21-1.0.25"
+    id("com.google.devtools.ksp") version "2.0.10-1.0.24"
 }
 
 android {
@@ -56,6 +56,10 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
+
+    //Dagger
+    implementation(libs.dagger)
+    ksp(libs.dagger.compiler)
 
     testImplementation(libs.junit)
 
