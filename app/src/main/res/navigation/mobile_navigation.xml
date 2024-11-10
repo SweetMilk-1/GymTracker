@@ -3,23 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_exercises">
 
     <fragment
-        android:id="@+id/nav_home"
+        android:id="@+id/nav_exercises"
         android:name="ru.sweetmilk.gymtracker.ui.exercises.ExercisesFragment"
-        android:label="@string/menu_home"
+        android:label="@string/menu_exercises"
         tools:layout="@layout/frag_exercises" />
-
-    <fragment
-        android:id="@+id/nav_gallery"
-        android:name="ru.sweetmilk.gymtracker.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="ru.sweetmilk.gymtracker.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
 </navigation>
