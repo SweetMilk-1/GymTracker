@@ -10,4 +10,5 @@
     <string name="menu_exercises">Упражнения</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="list_is_empty">Список пуст</string>
 </resources>

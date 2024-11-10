@@ -8,7 +8,7 @@ class ExerciseRepo @Inject constructor(
     private val database: AppDatabase,
     private val coroutineContext: CoroutineContext
 ) {
-    suspend fun getAllExercises(search: String): List<Exercise> = withContext(coroutineContext) {
-        database.getExerciseDao().getAllExercises(search)
+    suspend fun getAllExercises(): List<Exercise> = withContext(coroutineContext) {
+        database.getExerciseDao().getAllExercises()
     }
 }

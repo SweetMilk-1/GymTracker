@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("kotlin-kapt")
     id("com.google.devtools.ksp") version "2.0.10-1.0.24"
 }
 
@@ -36,6 +37,7 @@ android {
     }
 
     buildFeatures {
+        dataBinding = true
         viewBinding = true
     }
 }
@@ -61,8 +63,4 @@ dependencies {
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)
 
-    testImplementation(libs.junit)
-
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
 }

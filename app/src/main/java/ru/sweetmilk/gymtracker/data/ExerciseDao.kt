@@ -7,8 +7,8 @@ import java.util.UUID
 
 @Dao
 interface ExerciseDao {
-    @Query("SELECT * FROM EXERCISES where name like '%' + :search + '%'")
-    suspend fun getAllExercises(search: String = ""): List<Exercise>
+    @Query("SELECT * FROM EXERCISES")
+    suspend fun getAllExercises(): List<Exercise>
 
     @Query("SELECT * FROM EXERCISES WHERE id = :exerciseId")
     suspend fun getExerciseById(exerciseId: UUID): Exercise?
