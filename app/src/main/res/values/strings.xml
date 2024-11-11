@@ -20,4 +20,6 @@
     <string name="new_exercise_label">Новое упражнение</string>
     <string name="exercise_label">Упражнение</string>
     <string name="update_exercise_label">Редактирвовать упражнение</string>
+    <string name="delete_exercise">Удалить</string>
+    <string name="delete_exercise_completed">Упражнение удалено!</string>
 </resources>

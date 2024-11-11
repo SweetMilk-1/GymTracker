@@ -19,6 +19,13 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments["room.schemaLocation"] =
+                    "$projectDir/schemas"
+            }
+        }
     }
 
     buildTypes {
@@ -27,9 +34,14 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+
     }
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas")
     }
 
     buildFeatures {
@@ -37,6 +49,8 @@ android {
         viewBinding = true
     }
 }
+
+
 
 dependencies {
 

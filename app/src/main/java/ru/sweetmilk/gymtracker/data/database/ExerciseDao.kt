@@ -9,7 +9,7 @@ import java.util.UUID
 
 @Dao
 interface ExerciseDao {
-    @Query("SELECT * FROM EXERCISES")
+    @Query("SELECT * FROM EXERCISES where is_deleted=0")
     fun getAllExercisesObservable(): LiveData<List<Exercise>>
 
     @Query("SELECT * FROM EXERCISES WHERE id = :exerciseId")

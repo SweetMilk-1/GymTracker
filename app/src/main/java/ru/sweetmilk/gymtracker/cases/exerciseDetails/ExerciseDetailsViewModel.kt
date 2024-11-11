@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import ru.sweetmilk.gymtracker.R
 import ru.sweetmilk.gymtracker.SingleLiveEvent
 import ru.sweetmilk.gymtracker.data.Result
@@ -50,6 +52,7 @@ class ExerciseDetailsViewModel @Inject constructor(
     //Events
     val showSnackBarMessageEvent = SingleLiveEvent<Int>()
     val updateExerciseEvent = SingleLiveEvent<UUID>()
+    val deleteExerciseCompletedEvent = SingleLiveEvent<Unit>()
 
     private var isInitialized: Boolean = false
 
@@ -71,5 +74,15 @@ class ExerciseDetailsViewModel @Inject constructor(
         if (exerciseId.value == null)
             return
         updateExerciseEvent.value = exerciseId.value
+    }
+
+    fun deleteExercise() {
+        viewModelScope.launch {
+            val exercise = exercise.value
+            if (exercise != null) {
+                exerciseRepo.deleteExercise(exercise)
+                deleteExerciseCompletedEvent.value = Unit
+            }
+        }
     }
 }

@@ -11,6 +11,8 @@ import ru.sweetmilk.gymtracker.data.repositories.ExerciseRepo
 import java.util.UUID
 import javax.inject.Inject
 
+typealias OpenExercisesParameters = Pair<UUID, String>
+
 class ExercisesViewModel @Inject constructor(
     exerciseRepo: ExerciseRepo
 ) : ViewModel() {
@@ -29,14 +31,14 @@ class ExercisesViewModel @Inject constructor(
 
     //Events
     val createNewExerciseEvent = SingleLiveEvent<Unit>()
-    val openExerciseEvent = SingleLiveEvent<UUID>()
+    val openExerciseEvent = SingleLiveEvent<OpenExercisesParameters>()
 
 
     fun createNewExercise() {
         createNewExerciseEvent.value = Unit
     }
 
-    fun openExercise(id: UUID) {
-        openExerciseEvent.value = id
+    fun openExercise(id: UUID, title: String) {
+        openExerciseEvent.value = OpenExercisesParameters(id, title)
     }
 }

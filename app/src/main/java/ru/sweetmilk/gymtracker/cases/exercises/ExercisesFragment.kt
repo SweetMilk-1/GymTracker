@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import ru.sweetmilk.gymtracker.GymApplication
 import ru.sweetmilk.gymtracker.R
 import ru.sweetmilk.gymtracker.data.Result
@@ -27,6 +29,8 @@ class ExercisesFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var adapter: ExercisesAdapter
+
+    private val args: ExercisesFragmentArgs by navArgs()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -53,6 +57,10 @@ class ExercisesFragment : Fragment() {
         adapter = ExercisesAdapter(viewModel, layoutInflater)
         binding.exercisesList.adapter = adapter
 
+        if (args.message != 0) {
+            Snackbar.make(requireView(), args.message, Snackbar.LENGTH_SHORT).show()
+        }
+
         viewModel.createNewExerciseEvent.observe(viewLifecycleOwner) {
             val action = ExercisesFragmentDirections.actionExercisesToAddEditExercise(
                 null,
@@ -67,8 +75,8 @@ class ExercisesFragment : Fragment() {
 
         viewModel.openExerciseEvent.observe(viewLifecycleOwner) {
             val action = ExercisesFragmentDirections.actionExercisesToExerciseDetails(
-                it.toString(),
-                getString(R.string.update_exercise_label)
+                it.first.toString(),
+                it.second
             )
             findNavController().navigate(action)
         }

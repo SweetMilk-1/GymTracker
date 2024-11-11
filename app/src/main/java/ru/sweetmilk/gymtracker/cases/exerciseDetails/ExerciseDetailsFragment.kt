@@ -1,21 +1,30 @@
 package ru.sweetmilk.gymtracker.cases.exerciseDetails
 
 import android.content.Context
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+//import android.view.Menu
+//import android.view.MenuInflater
+//import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+//import androidx.core.view.MenuHost
+//import androidx.core.view.MenuProvider
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+//import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import ru.sweetmilk.gymtracker.GymApplication
 import ru.sweetmilk.gymtracker.R
-import ru.sweetmilk.gymtracker.cases.addEditExercise.AddEditExerciseFragmentArgs
-import ru.sweetmilk.gymtracker.cases.addEditExercise.AddEditExerciseViewModel
-import ru.sweetmilk.gymtracker.databinding.FragAddEditExerciseBinding
 import ru.sweetmilk.gymtracker.databinding.FragExerciseDetailsBinding
 import java.util.UUID
 import javax.inject.Inject
@@ -71,6 +80,37 @@ class ExerciseDetailsFragment : Fragment() {
             )
             findNavController().navigate(action)
         }
+
+        viewModel.deleteExerciseCompletedEvent.observe(viewLifecycleOwner) {
+            val action = ExerciseDetailsFragmentDirections.actionExerciseDetailsToExercises(
+                R.string.delete_exercise_completed
+            )
+            findNavController().navigate(action)
+        }
+
+        setupMenuProvider()
+    }
+
+    private fun setupMenuProvider() {
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(
+            object : MenuProvider {
+                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                    menuInflater.inflate(R.menu.exercise_details_menu, menu)
+                }
+
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                    return when (menuItem.itemId) {
+                        R.id.action_delete -> {
+                            viewModel.deleteExercise()
+                            true
+                        }
+                        else -> false
+                    }
+                }
+            },
+            viewLifecycleOwner, Lifecycle.State.RESUMED
+        )
     }
 
     override fun onDestroyView() {

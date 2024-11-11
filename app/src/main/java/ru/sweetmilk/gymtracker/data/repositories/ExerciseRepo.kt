@@ -40,4 +40,9 @@ class ExerciseRepo @Inject constructor(
     suspend fun upsertExercise(exercise: Exercise) = withContext(coroutineContext) {
         database.getExerciseDao().upsertExercise(exercise)
     }
+
+    suspend fun deleteExercise(exercise: Exercise) = withContext(coroutineContext) {
+        exercise.isDeleted = true
+        database.getExerciseDao().upsertExercise(exercise)
+    }
 }

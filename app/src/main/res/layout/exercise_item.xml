@@ -20,7 +20,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:onClick="@{() -> viewModel.openExercise(exercise.id)}"
+        android:onClick="@{() -> viewModel.openExercise(exercise.id, exercise.name)}"
         android:padding="8dp">
 
 
