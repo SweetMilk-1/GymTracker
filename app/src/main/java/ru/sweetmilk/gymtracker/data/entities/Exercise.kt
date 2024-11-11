@@ -1,4 +1,4 @@
-package ru.sweetmilk.gymtracker.data
+package ru.sweetmilk.gymtracker.data.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -9,7 +9,7 @@ import java.util.UUID
     tableName = "exercises",
 )
 data class Exercise (
-    var name: String,
+    var name: String = "",
     var description: String? = null,
     @ColumnInfo("has_duration") var hasDuration: Boolean = false,
     @PrimaryKey val id: UUID = UUID.randomUUID()

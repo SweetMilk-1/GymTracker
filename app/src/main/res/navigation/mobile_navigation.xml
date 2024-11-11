@@ -7,7 +7,26 @@
 
     <fragment
         android:id="@+id/nav_exercises"
-        android:name="ru.sweetmilk.gymtracker.ui.exercises.ExercisesFragment"
+        android:name="ru.sweetmilk.gymtracker.cases.exercises.ExercisesFragment"
         android:label="@string/menu_exercises"
-        tools:layout="@layout/frag_exercises" />
+        tools:layout="@layout/frag_exercises">
+        <action
+            android:id="@+id/action_exercises_to_addEditExercise"
+            app:destination="@id/nav_add_edit_exercise" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_add_edit_exercise"
+        android:name="ru.sweetmilk.gymtracker.cases.addEditExercise.AddEditExerciseFragment"
+        android:label="{title}"
+        tools:layout="@layout/frag_add_edit_exercise">
+        <argument
+            android:name="exerciseId"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="title"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
 </navigation>

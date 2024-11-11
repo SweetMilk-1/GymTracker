@@ -5,7 +5,8 @@ import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
 import ru.sweetmilk.gymtracker.data.di.DatabaseModule
-import ru.sweetmilk.gymtracker.ui.exercises.di.ExercisesComponent
+import ru.sweetmilk.gymtracker.cases.addEditExercise.di.AddEditExerciseComponent
+import ru.sweetmilk.gymtracker.cases.exercises.di.ExercisesComponent
 import javax.inject.Singleton
 
 @Singleton
@@ -25,11 +26,13 @@ interface AppComponent {
     }
 
     fun addExercisesComponent(): ExercisesComponent.Factory
+    fun addAddEditExerciseComponent(): AddEditExerciseComponent.Factory
 }
 
 @Module(
     subcomponents = [
-        ExercisesComponent::class
+        ExercisesComponent::class,
+        AddEditExerciseComponent::class
     ]
 )
 object FragmentSubcomponentsModule

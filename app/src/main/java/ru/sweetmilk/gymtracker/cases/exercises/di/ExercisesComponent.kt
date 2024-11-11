@@ -1,7 +1,7 @@
-package ru.sweetmilk.gymtracker.ui.exercises.di
+package ru.sweetmilk.gymtracker.cases.exercises.di
 
 import dagger.Subcomponent
-import ru.sweetmilk.gymtracker.ui.exercises.ExercisesFragment
+import ru.sweetmilk.gymtracker.cases.exercises.ExercisesFragment
 
 @Subcomponent(modules = [ExercisesModule::class])
 interface ExercisesComponent {

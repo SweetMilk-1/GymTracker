@@ -1,9 +1,10 @@
-package ru.sweetmilk.gymtracker.data
+package ru.sweetmilk.gymtracker.data.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import ru.sweetmilk.gymtracker.data.entities.Exercise
 
 @Database(
     entities = [Exercise::class], version = 1, exportSchema = true

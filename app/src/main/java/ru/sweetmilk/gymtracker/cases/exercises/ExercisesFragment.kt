@@ -1,16 +1,17 @@
-package ru.sweetmilk.gymtracker.ui.exercises
+package ru.sweetmilk.gymtracker.cases.exercises
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import ru.sweetmilk.gymtracker.GymApplication
+import ru.sweetmilk.gymtracker.R
+import ru.sweetmilk.gymtracker.data.Result
 import ru.sweetmilk.gymtracker.databinding.FragExercisesBinding
 import javax.inject.Inject
 
@@ -24,6 +25,8 @@ class ExercisesFragment : Fragment() {
 
     private var _binding: FragExercisesBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var adapter: ExercisesAdapter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -47,8 +50,27 @@ class ExercisesFragment : Fragment() {
         binding.lifecycleOwner = this.viewLifecycleOwner
         binding.viewModel = viewModel
 
+        adapter = ExercisesAdapter(viewModel, layoutInflater)
+        binding.exercisesList.adapter = adapter
+
         viewModel.createNewExerciseEvent.observe(viewLifecycleOwner) {
-            Toast.makeText(requireContext(), "asfdasd", Toast.LENGTH_SHORT).show()
+            val action = ExercisesFragmentDirections.actionExercisesToAddEditExercise(
+                null,
+                getString(R.string.new_exercise_label)
+            )
+            findNavController().navigate(action)
+        }
+
+        viewModel.items.observe(viewLifecycleOwner) {
+            adapter.submitList((it as Result.Success).data)
+        }
+
+        viewModel.openExerciseEvent.observe(viewLifecycleOwner) {
+            val action = ExercisesFragmentDirections.actionExercisesToAddEditExercise(
+                it.toString(),
+                getString(R.string.update_exercise_label)
+            )
+            findNavController().navigate(action)
         }
     }
 

@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="ru.sweetmilk.gymtracker.ui.exercises.ExercisesViewModel" />
+            type="ru.sweetmilk.gymtracker.cases.exercises.ExercisesViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -20,12 +20,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ProgressBar
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/exercises_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
             android:layout_width="@dimen/progress_bar_size"
             android:layout_height="@dimen/progress_bar_size"
             android:layout_gravity="center"
             android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
-            tools:visibility="visible" />
+            tools:visibility="visible"
+            android:indeterminate="true"/>
 
         <TextView
             android:layout_width="match_parent"

@@ -1,8 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+
     id("kotlin-kapt")
     id("com.google.devtools.ksp") version "2.0.10-1.0.24"
+    id("androidx.navigation.safeargs.kotlin") version "2.8.3"
 }
 
 android {
