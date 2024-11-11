@@ -15,6 +15,8 @@ import ru.sweetmilk.gymtracker.data.Result
 import java.util.UUID
 import javax.inject.Inject
 
+typealias SaveCompletedParameters = Pair<UUID, String>
+
 class AddEditExerciseViewModel @Inject constructor(
     private val exerciseRepo: ExerciseRepo
 ) : ViewModel() {
@@ -24,14 +26,13 @@ class AddEditExerciseViewModel @Inject constructor(
     val hasDuration = MutableLiveData<Boolean>(false)
 
     private var exerciseId = MutableLiveData<UUID?>(null)
-    val isNew: LiveData<Boolean> = exerciseId.map { it != null }
 
     private val _isLoading = MutableLiveData<Boolean>(false)
     val isLoading: LiveData<Boolean> get() = _isLoading
 
     //Events
     val snackbarMessageEvent = SingleLiveEvent<Int>()
-    val saveCompletedEvent = SingleLiveEvent<UUID>()
+    val saveCompletedEvent = SingleLiveEvent<SaveCompletedParameters>()
 
     private var exercise = Exercise()
     private var isDataLoaded: Boolean = false
@@ -49,7 +50,6 @@ class AddEditExerciseViewModel @Inject constructor(
     private fun loadExercise(exerciseId: UUID) {
         _isLoading.value = true
         viewModelScope.launch {
-            delay(3000)
             when (val result = exerciseRepo.getExerciseById(exerciseId)) {
                 is Result.Success -> exercise = result.data
                 is Result.Error -> snackbarMessageEvent.value = R.string.could_not_load_data
@@ -77,7 +77,7 @@ class AddEditExerciseViewModel @Inject constructor(
         viewModelScope.launch {
             _isLoading.value = true
             exerciseRepo.upsertExercise(exercise)
-            saveCompletedEvent.value = exercise.id
+            saveCompletedEvent.value = SaveCompletedParameters(exercise.id, exercise.name)
         }
     }
 }

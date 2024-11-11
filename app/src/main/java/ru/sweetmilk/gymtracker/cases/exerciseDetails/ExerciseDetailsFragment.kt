@@ -1,37 +1,42 @@
-package ru.sweetmilk.gymtracker.cases.addEditExercise
+package ru.sweetmilk.gymtracker.cases.exerciseDetails
 
 import android.content.Context
+import androidx.fragment.app.viewModels
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import ru.sweetmilk.gymtracker.GymApplication
+import ru.sweetmilk.gymtracker.R
+import ru.sweetmilk.gymtracker.cases.addEditExercise.AddEditExerciseFragmentArgs
+import ru.sweetmilk.gymtracker.cases.addEditExercise.AddEditExerciseViewModel
 import ru.sweetmilk.gymtracker.databinding.FragAddEditExerciseBinding
+import ru.sweetmilk.gymtracker.databinding.FragExerciseDetailsBinding
 import java.util.UUID
 import javax.inject.Inject
 
-class AddEditExerciseFragment : Fragment() {
+class ExerciseDetailsFragment : Fragment() {
+
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProvider.Factory
-    private val viewModel by viewModels<AddEditExerciseViewModel> {
+    private val viewModel by viewModels<ExerciseDetailsViewModel> {
         viewModelProviderFactory
     }
 
-    private var _binding: FragAddEditExerciseBinding? = null
+    private var _binding: FragExerciseDetailsBinding? = null
     private val binding get() = _binding!!
 
-    private val args: AddEditExerciseFragmentArgs by navArgs()
+    private val args: ExerciseDetailsFragmentArgs by navArgs()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (requireActivity().application as GymApplication).appComponent
-            .addAddEditExerciseComponent()
+            .addExerciseDetailsComponent()
             .create()
             .inject(this)
     }
@@ -44,11 +49,10 @@ class AddEditExerciseFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragAddEditExerciseBinding.inflate(inflater, container, false)
+        _binding = FragExerciseDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -56,14 +60,14 @@ class AddEditExerciseFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        viewModel.snackbarMessageEvent.observe(viewLifecycleOwner) {
+        viewModel.showSnackBarMessageEvent.observe(viewLifecycleOwner) {
             Snackbar.make(requireView(), it, Snackbar.LENGTH_SHORT).show()
         }
 
-        viewModel.saveCompletedEvent.observe(viewLifecycleOwner) {
-            val action = AddEditExerciseFragmentDirections.actionAddEditExerciseToExerciseDetails(
-                it.first.toString(),
-                it.second
+        viewModel.updateExerciseEvent.observe(viewLifecycleOwner) {
+            val action = ExerciseDetailsFragmentDirections.actionExerciseDetailsToAddEditExercise(
+                it.toString(),
+                getString(R.string.update_exercise_label)
             )
             findNavController().navigate(action)
         }

@@ -30,7 +30,6 @@ class ExercisesViewModel @Inject constructor(
     //Events
     val createNewExerciseEvent = SingleLiveEvent<Unit>()
     val openExerciseEvent = SingleLiveEvent<UUID>()
-    val showSnackbarEvent = SingleLiveEvent<Int>()
 
 
     fun createNewExercise() {

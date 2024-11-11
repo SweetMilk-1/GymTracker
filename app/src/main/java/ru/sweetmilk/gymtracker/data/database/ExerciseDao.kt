@@ -13,6 +13,9 @@ interface ExerciseDao {
     fun getAllExercisesObservable(): LiveData<List<Exercise>>
 
     @Query("SELECT * FROM EXERCISES WHERE id = :exerciseId")
+    fun getExerciseByIdObservable(exerciseId: UUID): LiveData<Exercise>
+
+    @Query("SELECT * FROM EXERCISES WHERE id = :exerciseId")
     suspend fun getExerciseById(exerciseId: UUID): Exercise?
 
     @Upsert

@@ -10,7 +10,7 @@ import javax.inject.Provider
 import kotlin.reflect.KClass
 
 
-class MovieAppViewModelFactory @Inject constructor(
+class ViewModelFactory @Inject constructor(
     private val creators: @JvmSuppressWildcards Map<Class<out ViewModel>, Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -40,7 +40,7 @@ abstract class ViewModelBuilderModule {
 
     @Binds
     abstract fun bindViewModelFactory(
-        factory: MovieAppViewModelFactory
+        factory: ViewModelFactory
     ): ViewModelProvider.Factory
 }
 

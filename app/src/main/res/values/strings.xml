@@ -8,14 +8,16 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_exercises">Упражнения</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+
     <string name="list_is_empty">Список пуст</string>
+
     <string name="exercise_name_label">Название</string>
     <string name="exercise_description_label">Описание</string>
     <string name="exercise_has_duration">Измеряется в секундах</string>
     <string name="could_not_load_data">Не удалось загрузить данные</string>
     <string name="exercise_name_is_required">Название упражнения обязательно</string>
+
     <string name="new_exercise_label">Новое упражнение</string>
+    <string name="exercise_label">Упражнение</string>
     <string name="update_exercise_label">Редактирвовать упражнение</string>
 </resources>

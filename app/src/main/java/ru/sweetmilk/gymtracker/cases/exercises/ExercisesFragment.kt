@@ -66,7 +66,7 @@ class ExercisesFragment : Fragment() {
         }
 
         viewModel.openExerciseEvent.observe(viewLifecycleOwner) {
-            val action = ExercisesFragmentDirections.actionExercisesToAddEditExercise(
+            val action = ExercisesFragmentDirections.actionExercisesToExerciseDetails(
                 it.toString(),
                 getString(R.string.update_exercise_label)
             )

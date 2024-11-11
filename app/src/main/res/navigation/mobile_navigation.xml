@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_exercises_to_addEditExercise"
             app:destination="@id/nav_add_edit_exercise" />
+        <action
+            android:id="@+id/action_exercises_to_exerciseDetails"
+            app:destination="@id/nav_exercise_details" />
     </fragment>
 
     <fragment
@@ -28,5 +31,28 @@
             android:name="title"
             app:argType="string"
             app:nullable="false" />
+
+        <action
+            android:id="@+id/action_addEditExercise_to_exerciseDetails"
+            app:destination="@id/nav_exercise_details"
+            app:popUpTo="@id/nav_exercises" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_exercise_details"
+        android:name="ru.sweetmilk.gymtracker.cases.exerciseDetails.ExerciseDetailsFragment"
+        android:label="{title}"
+        tools:layout="@layout/frag_exercise_details">
+        <argument
+            android:name="exerciseId"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="title"
+            app:argType="string"
+            app:nullable="false" />
+        <action
+            android:id="@+id/action_exerciseDetails_to_addEditExercise"
+            app:destination="@id/nav_add_edit_exercise" />
     </fragment>
 </navigation>

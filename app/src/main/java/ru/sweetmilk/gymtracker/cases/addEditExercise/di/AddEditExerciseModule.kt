@@ -12,5 +12,5 @@ abstract class AddEditExerciseModule {
     @Binds
     @IntoMap
     @ViewModelKey(AddEditExerciseViewModel::class)
-    abstract fun bindViewModel(viewmodel: AddEditExerciseViewModel): ViewModel
+    abstract fun bindViewModel(viewModel: AddEditExerciseViewModel): ViewModel
 }

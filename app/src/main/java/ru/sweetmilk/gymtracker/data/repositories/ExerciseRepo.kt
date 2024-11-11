@@ -21,6 +21,12 @@ class ExerciseRepo @Inject constructor(
         }
     }
 
+    fun getExerciseByIdObservable(id: UUID): LiveData<Result<Exercise>> {
+        return database.getExerciseDao().getExerciseByIdObservable(id).map {
+            Result.Success(it)
+        }
+    }
+
     suspend fun getExerciseById(id: UUID): Result<Exercise> = withContext(coroutineContext) {
         try {
             val exercise =
