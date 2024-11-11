@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import ru.sweetmilk.gymtracker.GymApplication
+import ru.sweetmilk.gymtracker.R
 import ru.sweetmilk.gymtracker.databinding.FragAddEditExerciseBinding
 import java.util.UUID
 import javax.inject.Inject
@@ -56,14 +57,29 @@ class AddEditExerciseFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
+        setupFormValidation()
+        setupSnackBar()
+        setupNavigation()
+    }
+
+    private fun setupFormValidation() {
+        viewModel.nameInvalidMessage.observe(viewLifecycleOwner) {
+            binding.exerciseName.error = if (it != null) getString(it) else null
+        }
+    }
+
+    private fun setupSnackBar() {
         viewModel.snackbarMessageEvent.observe(viewLifecycleOwner) {
             Snackbar.make(requireView(), it, Snackbar.LENGTH_SHORT).show()
         }
+    }
 
+    private fun setupNavigation() {
         viewModel.saveCompletedEvent.observe(viewLifecycleOwner) {
             val action = AddEditExerciseFragmentDirections.actionAddEditExerciseToExerciseDetails(
                 it.first.toString(),
-                it.second
+                it.second,
+                R.string.exercise_saved
             )
             findNavController().navigate(action)
         }

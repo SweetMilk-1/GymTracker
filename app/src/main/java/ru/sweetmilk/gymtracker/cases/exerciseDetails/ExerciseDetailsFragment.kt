@@ -6,19 +6,13 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-//import android.view.Menu
-//import android.view.MenuInflater
-//import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
-//import androidx.core.view.MenuHost
-//import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-//import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -69,10 +63,14 @@ class ExerciseDetailsFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        viewModel.showSnackBarMessageEvent.observe(viewLifecycleOwner) {
-            Snackbar.make(requireView(), it, Snackbar.LENGTH_SHORT).show()
-        }
+        viewModel.showResultMessage(args.message)
 
+        setupSnackBar()
+        setupNavigation()
+        setupMenuProvider()
+    }
+
+    private fun setupNavigation() {
         viewModel.updateExerciseEvent.observe(viewLifecycleOwner) {
             val action = ExerciseDetailsFragmentDirections.actionExerciseDetailsToAddEditExercise(
                 it.toString(),
@@ -87,8 +85,12 @@ class ExerciseDetailsFragment : Fragment() {
             )
             findNavController().navigate(action)
         }
+    }
 
-        setupMenuProvider()
+    private fun setupSnackBar() {
+        viewModel.showSnackBarEvent.observe(viewLifecycleOwner) {
+            Snackbar.make(requireView(), it, Snackbar.LENGTH_SHORT).show()
+        }
     }
 
     private fun setupMenuProvider() {

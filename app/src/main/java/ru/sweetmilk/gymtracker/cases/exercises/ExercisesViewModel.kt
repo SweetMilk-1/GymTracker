@@ -32,7 +32,9 @@ class ExercisesViewModel @Inject constructor(
     //Events
     val createNewExerciseEvent = SingleLiveEvent<Unit>()
     val openExerciseEvent = SingleLiveEvent<OpenExercisesParameters>()
+    val showSnackBarEvent = SingleLiveEvent<Int>()
 
+    private val resultMessageShown = false
 
     fun createNewExercise() {
         createNewExerciseEvent.value = Unit
@@ -40,5 +42,11 @@ class ExercisesViewModel @Inject constructor(
 
     fun openExercise(id: UUID, title: String) {
         openExerciseEvent.value = OpenExercisesParameters(id, title)
+    }
+
+    fun showResultMessage(message: Int) {
+        if (resultMessageShown || message == 0)
+            return
+        showSnackBarEvent.value = message
     }
 }

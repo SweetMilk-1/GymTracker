@@ -30,6 +30,10 @@ class AddEditExerciseViewModel @Inject constructor(
     private val _isLoading = MutableLiveData<Boolean>(false)
     val isLoading: LiveData<Boolean> get() = _isLoading
 
+    private val _nameInvalidMessage = MutableLiveData<Int?>()
+    val nameInvalidMessage: LiveData<Int?> get() = _nameInvalidMessage
+
+
     //Events
     val snackbarMessageEvent = SingleLiveEvent<Int>()
     val saveCompletedEvent = SingleLiveEvent<SaveCompletedParameters>()
@@ -65,8 +69,9 @@ class AddEditExerciseViewModel @Inject constructor(
     }
 
     fun saveExercise() {
+        _nameInvalidMessage.value = null
         if (name.value.isNullOrEmpty()) {
-            snackbarMessageEvent.value = R.string.exercise_name_is_required
+            _nameInvalidMessage.value = R.string.exercise_name_is_required
             return
         }
 

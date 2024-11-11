@@ -26,7 +26,7 @@ class ExerciseDetailsViewModel @Inject constructor(
             when (it) {
                 is Result.Success -> it.data
                 else -> {
-                    showSnackBarMessageEvent.value = R.string.could_not_load_data
+                    showSnackBarEvent.value = R.string.could_not_load_data
                     null
                 }
             }
@@ -50,18 +50,19 @@ class ExerciseDetailsViewModel @Inject constructor(
     }
 
     //Events
-    val showSnackBarMessageEvent = SingleLiveEvent<Int>()
+    val showSnackBarEvent = SingleLiveEvent<Int>()
     val updateExerciseEvent = SingleLiveEvent<UUID>()
     val deleteExerciseCompletedEvent = SingleLiveEvent<Unit>()
 
     private var isInitialized: Boolean = false
+    private var resultMessageShown = false
 
     fun init(id: UUID?) {
         if (isInitialized)
             return
 
         if (id == null) {
-            showSnackBarMessageEvent.value = R.string.could_not_load_data
+            showSnackBarEvent.value = R.string.could_not_load_data
             return
         }
 
@@ -84,5 +85,12 @@ class ExerciseDetailsViewModel @Inject constructor(
                 deleteExerciseCompletedEvent.value = Unit
             }
         }
+    }
+
+    fun showResultMessage(message: Int) {
+        if (resultMessageShown || message == 0)
+            return
+        showSnackBarEvent.value = message
+        resultMessageShown = true
     }
 }

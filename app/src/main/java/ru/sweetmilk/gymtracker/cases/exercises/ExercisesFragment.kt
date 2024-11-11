@@ -54,23 +54,34 @@ class ExercisesFragment : Fragment() {
         binding.lifecycleOwner = this.viewLifecycleOwner
         binding.viewModel = viewModel
 
+        setupExerciseList()
+        setupNavigation()
+        setupSnackBar()
+
+        viewModel.showResultMessage(args.message)
+    }
+
+    private fun setupExerciseList() {
         adapter = ExercisesAdapter(viewModel, layoutInflater)
         binding.exercisesList.adapter = adapter
-
-        if (args.message != 0) {
-            Snackbar.make(requireView(), args.message, Snackbar.LENGTH_SHORT).show()
+        viewModel.items.observe(viewLifecycleOwner) {
+            adapter.submitList((it as Result.Success).data)
         }
+    }
 
+    private fun setupSnackBar() {
+        viewModel.showSnackBarEvent.observe(viewLifecycleOwner) {
+            Snackbar.make(requireView(), it, Snackbar.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun setupNavigation() {
         viewModel.createNewExerciseEvent.observe(viewLifecycleOwner) {
             val action = ExercisesFragmentDirections.actionExercisesToAddEditExercise(
                 null,
                 getString(R.string.new_exercise_label)
             )
             findNavController().navigate(action)
-        }
-
-        viewModel.items.observe(viewLifecycleOwner) {
-            adapter.submitList((it as Result.Success).data)
         }
 
         viewModel.openExerciseEvent.observe(viewLifecycleOwner) {
