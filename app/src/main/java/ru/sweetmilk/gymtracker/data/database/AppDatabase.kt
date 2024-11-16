@@ -6,14 +6,17 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import ru.sweetmilk.gymtracker.data.entities.Exercise
+import ru.sweetmilk.gymtracker.data.entities.TrainingPlanItem
 
 @Database(
-    entities = [Exercise::class], version = 2, exportSchema = true, autoMigrations = [
-        AutoMigration(from = 1, to = 2)
+    entities = [Exercise::class, TrainingPlanItem::class], version = 3, exportSchema = true, autoMigrations = [
+        AutoMigration(from = 1, to = 2),
+        AutoMigration(from = 2, to = 3),
     ]
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getExerciseDao(): ExerciseDao
+    abstract fun getTrainingPlanItemDao(): TrainingPlanItemDao
 
     companion object {
         @Volatile

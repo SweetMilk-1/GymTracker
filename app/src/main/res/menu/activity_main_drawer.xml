@@ -5,6 +5,9 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_training_plan"
+            android:title="@string/menu_training_plan" />
+        <item
             android:id="@+id/nav_exercises"
             android:title="@string/menu_exercises" />
     </group>

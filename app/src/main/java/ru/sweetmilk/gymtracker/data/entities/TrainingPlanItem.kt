@@ -7,13 +7,13 @@ import androidx.room.PrimaryKey
 import java.util.UUID
 
 @Entity(
-    tableName = "exercise_plan_items",
+    tableName = "training_plan_items",
     foreignKeys = [
-        ForeignKey(Exercise::class, parentColumns = ["id"], childColumns = ["exerciseId"])
+        ForeignKey(Exercise::class, parentColumns = ["id"], childColumns = ["exercise_id"])
     ]
 )
 data class TrainingPlanItem(
-    @ColumnInfo(name = "exercise_id") var exerciseId: Int,
+    @ColumnInfo(name = "exercise_id") var exerciseId: UUID,
 
     var weight: Int = 0,
     var count: Int = 0,

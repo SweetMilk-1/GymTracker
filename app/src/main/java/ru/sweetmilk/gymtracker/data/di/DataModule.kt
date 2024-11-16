@@ -12,7 +12,7 @@ import javax.inject.Singleton
 import kotlin.coroutines.CoroutineContext
 
 @Module
-class DatabaseModule {
+class DataModule {
 
     @Provides
     @Singleton
@@ -35,6 +35,6 @@ class DatabaseModule {
         database: AppDatabase,
         coroutineContext: CoroutineContext
     ): TrainingPlanRepo {
-        return TrainingPlanRepoImpl()
+        return TrainingPlanRepoImpl(database, coroutineContext)
     }
 }
