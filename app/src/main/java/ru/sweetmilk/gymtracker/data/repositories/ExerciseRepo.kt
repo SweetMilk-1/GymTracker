@@ -12,6 +12,8 @@ interface ExerciseRepo {
 
     suspend fun getExerciseById(id: UUID): Result<Exercise>
 
+    suspend fun getAllExercises(): Result<List<Exercise>>
+
     suspend fun upsertExercise(exercise: Exercise)
 
     suspend fun deleteExercise(exercise: Exercise)

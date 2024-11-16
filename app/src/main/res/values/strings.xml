@@ -24,4 +24,10 @@
     <string name="delete_exercise_completed">Упражнение удалено!</string>
     <string name="exercise_saved">Упражнение сохранено!</string>
     <string name="menu_training_plan">Тренировочный план</string>
+    <string name="exercise_selector_label">Упражнение</string>
+    <string name="add_training_plan_item">Добавить подход</string>
+    <string name="choose_exercise">Выберите упражнение</string>
+    <string name="weight">Вес</string>
+    <string name="count">Раз</string>
+    <string name="duration">Сек</string>
 </resources>

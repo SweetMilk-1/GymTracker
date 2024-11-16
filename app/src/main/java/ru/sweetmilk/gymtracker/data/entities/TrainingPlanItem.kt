@@ -15,10 +15,10 @@ import java.util.UUID
 data class TrainingPlanItem(
     @ColumnInfo(name = "exercise_id") var exerciseId: UUID,
 
-    var weight: Int = 0,
-    var count: Int = 0,
-    var duration: Int = 0,
+    var weight: Float? = null,
+    var count: Int? = null,
+    var duration: Int? = null,
 
     @ColumnInfo(name = "sort_number") var sortNumber: Int = 0,
-    @PrimaryKey var id: UUID = UUID.randomUUID(),
+    @PrimaryKey val id: UUID = UUID.randomUUID(),
 )

@@ -9,9 +9,8 @@ import ru.sweetmilk.gymtracker.data.entities.Exercise
 import ru.sweetmilk.gymtracker.data.entities.TrainingPlanItem
 
 @Database(
-    entities = [Exercise::class, TrainingPlanItem::class], version = 3, exportSchema = true, autoMigrations = [
-        AutoMigration(from = 1, to = 2),
-        AutoMigration(from = 2, to = 3),
+    entities = [Exercise::class, TrainingPlanItem::class], version = 2, exportSchema = true, autoMigrations = [
+        AutoMigration(from = 1, to = 2)
     ]
 )
 abstract class AppDatabase : RoomDatabase() {

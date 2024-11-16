@@ -39,6 +39,17 @@ class ExerciseRepoImpl @Inject constructor(
             }
         }
 
+    override suspend fun getAllExercises(): Result<List<Exercise>> =
+        withContext(coroutineContext) {
+            try {
+                val exercises =
+                    database.getExerciseDao().getAllExercises()
+                Result.Success(exercises)
+            } catch (e: Exception) {
+                Result.Error(e)
+            }
+        }
+
     override suspend fun upsertExercise(exercise: Exercise) = withContext(coroutineContext) {
         database.getExerciseDao().upsertExercise(exercise)
     }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+
+        <import type="android.text.InputType" />
+        <import type="android.view.View" />
+
+        <variable
+            name="itemObservable"
+            type="ru.sweetmilk.gymtracker.cases.addEditTrainingPlanItem.TrainingPlanItemObservable" />
+
+        <variable
+            name="viewModel"
+            type="ru.sweetmilk.gymtracker.cases.addEditTrainingPlanItem.AddEditTrainingPlanItemViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:weightSum="7">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/training_plan_weight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="3"
+            android:hint="@string/weight"
+            android:visibility="@{viewModel.hasDuration ? View.GONE : View.VISIBLE}">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:text="@={itemObservable.weight}"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/training_plan_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="3"
+            android:hint="@string/duration"
+            android:visibility="@{viewModel.hasDuration ? View.VISIBLE : View.GONE }">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:text="@={itemObservable.duration}"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/training_plan_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="3"
+            android:hint="@string/count"
+            android:visibility="@{viewModel.hasDuration ? View.INVISIBLE : View.VISIBLE}">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:text="@={itemObservable.count}"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
+            android:id="@+id/training_plan_item_remove_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+
+            android:layout_weight="1"
+            android:onClick="@{() -> viewModel.removeTrainingPlanItem(itemObservable.id)}"
+            android:src="@drawable/ic_cross" />
+    </LinearLayout>
+</layout>

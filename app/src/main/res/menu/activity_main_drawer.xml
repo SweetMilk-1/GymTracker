@@ -10,5 +10,8 @@
         <item
             android:id="@+id/nav_exercises"
             android:title="@string/menu_exercises" />
+        <item
+            android:id="@+id/nav_add_edit_training_plan_item"
+            android:title="ТЕТЕТЕТЕ" />
     </group>
 </menu>

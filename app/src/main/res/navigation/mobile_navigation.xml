@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_training_plan">
+    app:startDestination="@+id/nav_add_edit_training_plan_item">
 
     <fragment
         android:id="@+id/nav_exercises"
@@ -71,6 +71,12 @@
     <fragment
         android:id="@+id/nav_training_plan"
         android:name="ru.sweetmilk.gymtracker.cases.trainingPlan.TrainingPlanFragment"
+        android:label="@string/menu_training_plan">
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_add_edit_training_plan_item"
+        android:name="ru.sweetmilk.gymtracker.cases.addEditTrainingPlanItem.AddEditTrainingPlanItemFragment"
         android:label="@string/menu_training_plan">
     </fragment>
 
