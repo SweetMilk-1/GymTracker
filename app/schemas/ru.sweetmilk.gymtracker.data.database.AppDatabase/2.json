@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "5bc4437515d4e847d6fb2b110d06ee4f",
+    "identityHash": "462a8cdf56fb3e8ffe1e45cd23caccf5",
     "entities": [
       {
         "tableName": "exercises",
@@ -48,12 +48,74 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "training_plan_items",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`exercise_id` BLOB NOT NULL, `weight` REAL, `count` INTEGER, `duration` INTEGER, `sort_number` INTEGER NOT NULL, `id` BLOB NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`exercise_id`) REFERENCES `exercises`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "exerciseId",
+            "columnName": "exercise_id",
+            "affinity": "BLOB",
+            "notNull": true
+          },
+          {
+            "fieldPath": "weight",
+            "columnName": "weight",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "count",
+            "columnName": "count",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "duration",
+            "columnName": "duration",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sortNumber",
+            "columnName": "sort_number",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "BLOB",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "exercises",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "exercise_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5bc4437515d4e847d6fb2b110d06ee4f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '462a8cdf56fb3e8ffe1e45cd23caccf5')"
     ]
   }
 }
