@@ -15,6 +15,9 @@ interface ExerciseDao {
     @Query("SELECT * FROM EXERCISES WHERE id = :exerciseId")
     fun getExerciseByIdObservable(exerciseId: UUID): LiveData<Exercise>
 
+    @Query("SELECT * FROM EXERCISES where is_deleted=0")
+    suspend fun getAllExercises(): List<Exercise>
+
     @Query("SELECT * FROM EXERCISES WHERE id = :exerciseId")
     suspend fun getExerciseById(exerciseId: UUID): Exercise?
 

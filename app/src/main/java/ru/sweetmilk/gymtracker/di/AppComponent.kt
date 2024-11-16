@@ -8,6 +8,7 @@ import ru.sweetmilk.gymtracker.data.di.DatabaseModule
 import ru.sweetmilk.gymtracker.cases.addEditExercise.di.AddEditExerciseComponent
 import ru.sweetmilk.gymtracker.cases.exerciseDetails.di.ExerciseDetailsComponent
 import ru.sweetmilk.gymtracker.cases.exercises.di.ExercisesComponent
+import ru.sweetmilk.gymtracker.cases.trainingPlan.di.TrainingPlanComponent
 import javax.inject.Singleton
 
 @Singleton
@@ -29,6 +30,7 @@ interface AppComponent {
     fun addExercisesComponent(): ExercisesComponent.Factory
     fun addAddEditExerciseComponent(): AddEditExerciseComponent.Factory
     fun addExerciseDetailsComponent(): ExerciseDetailsComponent.Factory
+    fun addTrainingPlanComponent(): TrainingPlanComponent.Factory
 }
 
 @Module(
@@ -36,6 +38,7 @@ interface AppComponent {
         ExercisesComponent::class,
         AddEditExerciseComponent::class,
         ExerciseDetailsComponent::class,
+        TrainingPlanComponent::class
     ]
 )
 object FragmentSubcomponentsModule
