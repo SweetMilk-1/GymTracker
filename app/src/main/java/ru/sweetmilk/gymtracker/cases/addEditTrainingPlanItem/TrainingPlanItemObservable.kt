@@ -10,7 +10,7 @@ class TrainingPlanItemObservable(private val viewModel: AddEditTrainingPlanItemV
     private lateinit var trainingPlanItem: TrainingPlanItem
 
     fun setTrainingPlanItem(trainingPlanItem: TrainingPlanItem) {
-        this.trainingPlanItem = trainingPlanItem.copy()
+        this.trainingPlanItem = trainingPlanItem
         notifyChange()
     }
 
@@ -19,9 +19,10 @@ class TrainingPlanItemObservable(private val viewModel: AddEditTrainingPlanItemV
     var weight: String?
         get() = trainingPlanItem.weight?.toString()
         set(value) {
-            if (!value.isNullOrEmpty())
+            if (!value.isNullOrEmpty()) {
                 trainingPlanItem.weight = value.toFloat()
-            viewModel.updateTrainingPlanItem(trainingPlanItem)
+                viewModel.updateTrainingPlanItem(trainingPlanItem)
+            }
         }
 
     @get:Bindable
@@ -29,9 +30,10 @@ class TrainingPlanItemObservable(private val viewModel: AddEditTrainingPlanItemV
     var count: String?
         get() = trainingPlanItem.count?.toString()
         set(value) {
-            if (!value.isNullOrEmpty())
+            if (!value.isNullOrEmpty()) {
                 trainingPlanItem.count = value.toInt()
-            viewModel.updateTrainingPlanItem(trainingPlanItem)
+                viewModel.updateTrainingPlanItem(trainingPlanItem)
+            }
         }
 
     @get:Bindable
@@ -39,9 +41,10 @@ class TrainingPlanItemObservable(private val viewModel: AddEditTrainingPlanItemV
     var duration: String?
         get() = trainingPlanItem.duration?.toString()
         set(value) {
-            if (!value.isNullOrEmpty())
+            if (!value.isNullOrEmpty()) {
                 trainingPlanItem.duration = value.toInt()
-            viewModel.updateTrainingPlanItem(trainingPlanItem)
+                viewModel.updateTrainingPlanItem(trainingPlanItem)
+            }
         }
 
     val id: UUID get() = trainingPlanItem.id

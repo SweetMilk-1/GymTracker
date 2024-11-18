@@ -44,7 +44,6 @@ class AddEditTrainingPlanItemViewModel @Inject constructor(
         viewModelInitialized = true
         _isLoading.value = true
         viewModelScope.launch {
-            delay(3000)
             when (val response = exerciseRepo.getAllExercises()) {
                 is Result.Success -> _exercises.value = response.data
                 else -> snackbarMessageEvent.value = R.string.could_not_load_data

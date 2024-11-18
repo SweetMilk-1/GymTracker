@@ -37,7 +37,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
+                android:inputType="number|numberDecimal"
                 android:text="@={itemObservable.weight}"/>
         </com.google.android.material.textfield.TextInputLayout>
 
