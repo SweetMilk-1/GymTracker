@@ -10,10 +10,10 @@ import ru.sweetmilk.gymtracker.data.entities.TrainingPlanItem
 @Dao
 interface TrainingPlanItemDao {
 
-    @Query("SELECT * FROM TRAINING_PLAN_ITEMS TPI JOIN EXERCISES E on TPI.exercise_id=E.id ORDER BY TPI.sort_number")
+    @Query("SELECT * FROM EXERCISES")
     fun getTrainingPlanObservable(): LiveData<List<ExerciseAndTrainingPlanItems>>
 
-    @Query("SELECT * FROM TRAINING_PLAN_ITEMS TPI JOIN EXERCISES E on TPI.exercise_id=E.id ORDER BY TPI.sort_number")
+    @Query("SELECT * FROM EXERCISES")
     suspend fun getTrainingPlan(): List<ExerciseAndTrainingPlanItems>
 
     @Query("DELETE FROM TRAINING_PLAN_ITEMS")

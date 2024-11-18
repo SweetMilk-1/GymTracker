@@ -12,11 +12,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import ru.sweetmilk.gymtracker.GymApplication
+import ru.sweetmilk.gymtracker.data.Result
 
 import ru.sweetmilk.gymtracker.databinding.FragTrainingPlanBinding
 import javax.inject.Inject
 
 class TrainingPlanFragment : Fragment() {
+    private lateinit var adapter: ExerciseAndTrainingPlanItemsAdapter
+
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProvider.Factory
     private val viewModel by viewModels<TrainingPlanViewModel> {
@@ -53,15 +56,39 @@ class TrainingPlanFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         setupNavigation()
         setupSnackBar()
+        setupExercisesList()
+    }
+
+    private fun setupExercisesList() {
+        adapter = ExerciseAndTrainingPlanItemsAdapter(layoutInflater, viewModel)
+        binding.exercisesList.adapter = adapter
+        viewModel.exercisesAndTrainingPlanItems.observe(viewLifecycleOwner) {
+            when (it) {
+                is Result.Success -> adapter.submitList(it.data)
+                else -> Unit
+            }
+        }
     }
 
     private fun setupNavigation() {
         viewModel.createNewTrainingPlanItemEvent.observe(viewLifecycleOwner) {
             val action =
-                TrainingPlanFragmentDirections.actionTrainingPlanToNavAddEditTrainingPlanItem()
+                TrainingPlanFragmentDirections.actionTrainingPlanToNavAddEditTrainingPlanItem(
+                    null,
+                    viewModel.getUsingExerciseIds()?.toTypedArray()
+                )
+            findNavController().navigate(action)
+        }
+        viewModel.updateTrainingPlanItemEvent.observe(viewLifecycleOwner) {
+            val action =
+                TrainingPlanFragmentDirections.actionTrainingPlanToNavAddEditTrainingPlanItem(
+                    it,
+                    viewModel.getUsingExerciseIds()?.toTypedArray()
+                )
             findNavController().navigate(action)
         }
     }

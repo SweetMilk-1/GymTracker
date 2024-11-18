@@ -10,5 +10,5 @@ data class ExerciseAndTrainingPlanItems (
         parentColumn = "id",
         entityColumn = "exercise_id"
     )
-    val trainingPlanItems: List<TrainingPlanItem>
+    var trainingPlanItems: List<TrainingPlanItem>
 ) : Serializable

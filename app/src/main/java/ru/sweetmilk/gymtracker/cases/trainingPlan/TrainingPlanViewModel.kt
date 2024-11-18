@@ -12,6 +12,7 @@ import ru.sweetmilk.gymtracker.data.Result
 import ru.sweetmilk.gymtracker.data.entities.ExerciseAndTrainingPlanItems
 import ru.sweetmilk.gymtracker.data.entities.TrainingPlanItem
 import ru.sweetmilk.gymtracker.data.repositories.TrainingPlanRepo
+import java.util.UUID
 import javax.inject.Inject
 
 class TrainingPlanViewModel @Inject constructor(
@@ -33,6 +34,7 @@ class TrainingPlanViewModel @Inject constructor(
 
     //Events
     val createNewTrainingPlanItemEvent = SingleLiveEvent<Unit>()
+    val updateTrainingPlanItemEvent = SingleLiveEvent<ExerciseAndTrainingPlanItems>()
     val snackbarMessageEvent = SingleLiveEvent<Int>()
 
     private var viewModelInitialized = false
@@ -50,6 +52,7 @@ class TrainingPlanViewModel @Inject constructor(
                         trainingPlanResult.data,
                         exerciseAndTrainingPlanItems
                     )
+
                     else -> snackbarMessageEvent.value = R.string.could_not_load_data
                 }
                 _isLoading.value = false
@@ -76,10 +79,21 @@ class TrainingPlanViewModel @Inject constructor(
         for (item in updatedList) {
             trainingPlanItems.addAll(item.trainingPlanItems)
         }
+
         trainingPlanRepo.upsertTrainingPlanItems(trainingPlanItems)
     }
 
     fun createNewTrainingPlanItem() {
         createNewTrainingPlanItemEvent.value = Unit
+    }
+
+    fun updateTrainingPlanItem(item: ExerciseAndTrainingPlanItems) {
+        updateTrainingPlanItemEvent.value = item
+    }
+
+    fun getUsingExerciseIds(): List<String>? {
+        return if (exercisesAndTrainingPlanItems.value is Result.Success) {
+            (exercisesAndTrainingPlanItems.value as? Result.Success)?.data?.map { it.exercise.id.toString() }
+        } else null
     }
 }

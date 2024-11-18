@@ -11,4 +11,6 @@ interface TrainingPlanRepo {
     suspend fun getTrainingPlan(): Result<List<ExerciseAndTrainingPlanItems>>
 
     suspend fun upsertTrainingPlanItems(list: List<TrainingPlanItem>)
+
+
 }

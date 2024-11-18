@@ -1,11 +1,5 @@
 <resources>
     <string name="app_name">GymTracker</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
 
     <string name="menu_exercises">Упражнения</string>
 
@@ -33,4 +27,7 @@
     <string name="count">Раз</string>
     <string name="duration">Сек</string>
     <string name="save_button">Сохранить</string>
+    <string name="approach_without_duration">%1$d подход: %2$.2f кг —\u0020</string>
+    <string name="approach_without_duration_once">%1$.1f кг —\u0020</string>
+    <string name="approach_with_duration">%1$d подход:\u0020</string>
 </resources>
