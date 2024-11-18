@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_add_edit_training_plan_item">
+    app:startDestination="@+id/nav_training_plan">
 
     <fragment
         android:id="@+id/nav_exercises"
@@ -70,12 +70,32 @@
     <fragment
         android:id="@+id/nav_training_plan"
         android:name="ru.sweetmilk.gymtracker.cases.trainingPlan.TrainingPlanFragment"
-        android:label="@string/menu_training_plan" />
+        android:label="@string/menu_training_plan"
+        tools:layout="@layout/frag_training_plan">
+
+        <argument
+            android:name="exerciseAndTrainingPlanItems"
+            android:defaultValue="@null"
+            app:argType="ru.sweetmilk.gymtracker.data.entities.ExerciseAndTrainingPlanItems"
+            app:nullable="true" />
+
+        <action
+            android:id="@+id/action_trainingPlan_to_nav_addEditTrainingPlanItem"
+            app:destination="@id/nav_add_edit_training_plan_item" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_add_edit_training_plan_item"
         android:name="ru.sweetmilk.gymtracker.cases.addEditTrainingPlanItem.AddEditTrainingPlanItemFragment"
-        android:label="@string/add_exercise_label">
+        android:label="@string/add_exercise_label"
+        tools:layout="@layout/add_new_training_plan_item">
+
+        <action
+            android:id="@+id/action_addEditTrainingPlanItem_to_trainingPlan"
+            app:destination="@id/nav_training_plan"
+            app:popUpTo="@id/nav_training_plan"
+            app:popUpToInclusive="true"/>
+
         <argument
             android:name="exerciseAndTrainingPlanItems"
             android:defaultValue="@null"

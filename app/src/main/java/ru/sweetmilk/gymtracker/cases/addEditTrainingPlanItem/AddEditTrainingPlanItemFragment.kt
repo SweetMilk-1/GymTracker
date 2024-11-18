@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import ru.sweetmilk.gymtracker.GymApplication
@@ -63,9 +64,21 @@ class AddEditTrainingPlanItemFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        setupNavigation()
         setupExerciseSelector()
         setupTrainingPlanList()
         setupSnackBar()
+
+    }
+
+    private fun setupNavigation() {
+        viewModel.saveTrainingPlanItems.observe(viewLifecycleOwner) {
+            val action =
+                AddEditTrainingPlanItemFragmentDirections.actionAddEditTrainingPlanItemToTrainingPlan(
+                    it
+                )
+            findNavController().navigate(action)
+        }
     }
 
     private fun setupSnackBar() {
