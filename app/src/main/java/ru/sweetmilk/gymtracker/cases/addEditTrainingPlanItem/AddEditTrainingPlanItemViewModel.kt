@@ -3,13 +3,14 @@ package ru.sweetmilk.gymtracker.cases.addEditTrainingPlanItem
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.sweetmilk.gymtracker.R
 import ru.sweetmilk.gymtracker.SingleLiveEvent
 import ru.sweetmilk.gymtracker.data.Result
 import ru.sweetmilk.gymtracker.data.entities.Exercise
+import ru.sweetmilk.gymtracker.data.entities.ExerciseAndTrainingPlanItems
 import ru.sweetmilk.gymtracker.data.entities.TrainingPlanItem
 import ru.sweetmilk.gymtracker.data.repositories.ExerciseRepo
 import java.util.UUID
@@ -32,15 +33,20 @@ class AddEditTrainingPlanItemViewModel @Inject constructor(
     private val _trainingPlanItems = MutableLiveData<List<TrainingPlanItem>>(listOf())
     val trainingPlanItems: LiveData<List<TrainingPlanItem>> get() = _trainingPlanItems
 
+    val isNotEmpty: LiveData<Boolean> = trainingPlanItems.map { it.isNotEmpty() }
+
     private var selectedExercise: Exercise? = null
 
     //Events
     val snackbarMessageEvent = SingleLiveEvent<Int>()
+    val saveTrainingPlanItems = SingleLiveEvent<ExerciseAndTrainingPlanItems>()
 
     private var viewModelInitialized = false
 
     fun init() {
-        if (viewModelInitialized) return
+        if (viewModelInitialized)
+            return
+
         viewModelInitialized = true
         _isLoading.value = true
         viewModelScope.launch {
@@ -81,5 +87,12 @@ class AddEditTrainingPlanItemViewModel @Inject constructor(
         val itemPosition = list.indexOfFirst { it.id == item.id }
         list[itemPosition] = item
         _trainingPlanItems.value = list
+    }
+
+    fun onSave() {
+        if (trainingPlanItems.value?.isEmpty() != true && selectedExercise != null)
+        {
+            saveTrainingPlanItems.value = ExerciseAndTrainingPlanItems(selectedExercise!!, trainingPlanItems.value!!)
+        }
     }
 }

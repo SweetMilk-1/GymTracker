@@ -32,4 +32,5 @@
     <string name="weight">Вес</string>
     <string name="count">Раз</string>
     <string name="duration">Сек</string>
+    <string name="save_button">Сохранить</string>
 </resources>

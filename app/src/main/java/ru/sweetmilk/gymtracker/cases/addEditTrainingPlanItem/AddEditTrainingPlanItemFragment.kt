@@ -53,17 +53,13 @@ class AddEditTrainingPlanItemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
         setupExerciseSelector()
         setupTrainingPlanList()
         setupSnackBar()
-        setupLoading()
-    }
-
-    private fun setupLoading() {
-        viewModel.isLoading.observe(viewLifecycleOwner) {
-            binding.progressBar.isVisible = it
-            binding.trainingPlanForm.isVisible = !it
-        }
     }
 
     private fun setupSnackBar() {
@@ -71,6 +67,7 @@ class AddEditTrainingPlanItemFragment : Fragment() {
             Snackbar.make(requireView(), it, Snackbar.LENGTH_SHORT).show()
         }
     }
+
 
     private fun setupTrainingPlanList() {
         adapter = TrainingPlanListAdapter(viewModel, layoutInflater)
@@ -87,12 +84,11 @@ class AddEditTrainingPlanItemFragment : Fragment() {
                 ArrayAdapter(requireContext(), R.layout.simple_dropdown_item_1line, exerciseNames)
             binding.exerciseSelector.apply {
                 setAdapter(adapter)
-                setOnItemClickListener { _, _, position, _ ->
-                    viewModel.selectExercise(position)
-                }
             }
         }
-        binding.exerciseSelector
+        binding.exerciseSelector.setOnItemClickListener { _, _, position, _ ->
+            viewModel.selectExercise(position)
+        }
     }
 
 
