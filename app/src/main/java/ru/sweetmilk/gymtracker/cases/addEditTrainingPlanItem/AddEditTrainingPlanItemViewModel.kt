@@ -39,32 +39,54 @@ class AddEditTrainingPlanItemViewModel @Inject constructor(
 
     //Events
     val snackbarMessageEvent = SingleLiveEvent<Int>()
+    val initExerciseEvent = SingleLiveEvent<Int>()
     val saveTrainingPlanItems = SingleLiveEvent<ExerciseAndTrainingPlanItems>()
 
     private var viewModelInitialized = false
 
-    fun init() {
+    fun init(
+        exerciseAndTrainingPlanItems: ExerciseAndTrainingPlanItems?,
+        excludedExerciseIds: List<UUID>?
+    ) {
         if (viewModelInitialized)
             return
 
         viewModelInitialized = true
+
         _isLoading.value = true
         viewModelScope.launch {
-            when (val response = exerciseRepo.getAllExercises()) {
+            val excludedExerciseIdsList = excludedExerciseIds?.toMutableList()
+                ?.filter { it != exerciseAndTrainingPlanItems?.exercise?.id }
+
+            when (val response = exerciseRepo.getAllExercises(excludedExerciseIdsList)) {
                 is Result.Success -> _exercises.value = response.data
                 else -> snackbarMessageEvent.value = R.string.could_not_load_data
             }
             _isLoading.value = false
+
+            if (exerciseAndTrainingPlanItems != null) {
+                _trainingPlanItems.value = exerciseAndTrainingPlanItems.trainingPlanItems
+                selectExercise(exerciseAndTrainingPlanItems.exercise)
+
+                val exercisePosition =
+                    exercises.value?.indexOfFirst { it.id == selectedExercise?.id }
+                if (exercisePosition != null)
+                    initExerciseEvent.value = exercisePosition
+            }
         }
     }
 
     fun selectExercise(position: Int) {
-        val newSelectedExercise = exercises.value?.get(position)
-        if (hasDuration.value != newSelectedExercise?.hasDuration) {
+        val newSelectedExercise = exercises.value?.get(position) ?: return
+        if (hasDuration.value != newSelectedExercise.hasDuration) {
             _trainingPlanItems.value = listOf()
         }
-        selectedExercise = newSelectedExercise
-        _hasDuration.value = selectedExercise?.hasDuration ?: false
+        selectExercise(newSelectedExercise)
+    }
+
+    private fun selectExercise(exercise: Exercise) {
+        selectedExercise = exercise
+        _hasDuration.value = exercise.hasDuration
     }
 
     fun addNewTrainingPlanItem() {
@@ -90,9 +112,9 @@ class AddEditTrainingPlanItemViewModel @Inject constructor(
     }
 
     fun onSave() {
-        if (trainingPlanItems.value?.isEmpty() != true && selectedExercise != null)
-        {
-            saveTrainingPlanItems.value = ExerciseAndTrainingPlanItems(selectedExercise!!, trainingPlanItems.value!!)
+        if (trainingPlanItems.value?.isEmpty() != true && selectedExercise != null) {
+            saveTrainingPlanItems.value =
+                ExerciseAndTrainingPlanItems(selectedExercise!!, trainingPlanItems.value!!)
         }
     }
 }

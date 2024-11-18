@@ -64,20 +64,28 @@
 
         <action
             android:id="@+id/action_exerciseDetails_to_exercises"
-            app:destination="@id/nav_exercises">
-        </action>
+            app:destination="@id/nav_exercises" />
     </fragment>
 
     <fragment
         android:id="@+id/nav_training_plan"
         android:name="ru.sweetmilk.gymtracker.cases.trainingPlan.TrainingPlanFragment"
-        android:label="@string/menu_training_plan">
-    </fragment>
+        android:label="@string/menu_training_plan" />
 
     <fragment
         android:id="@+id/nav_add_edit_training_plan_item"
         android:name="ru.sweetmilk.gymtracker.cases.addEditTrainingPlanItem.AddEditTrainingPlanItemFragment"
         android:label="@string/add_exercise_label">
+        <argument
+            android:name="exerciseAndTrainingPlanItems"
+            android:defaultValue="@null"
+            app:argType="ru.sweetmilk.gymtracker.data.entities.ExerciseAndTrainingPlanItems"
+            app:nullable="true" />
+        <argument
+            android:name="excludedExerciseIds"
+            android:defaultValue="@null"
+            app:argType="string[]"
+            app:nullable="true" />
     </fragment>
 
 </navigation>

@@ -39,11 +39,11 @@ class ExerciseRepoImpl @Inject constructor(
             }
         }
 
-    override suspend fun getAllExercises(): Result<List<Exercise>> =
+    override suspend fun getAllExercises(excludedExerciseIds: List<UUID>?): Result<List<Exercise>> =
         withContext(coroutineContext) {
             try {
                 val exercises =
-                    database.getExerciseDao().getAllExercises()
+                    database.getExerciseDao().getAllExercises(excludedExerciseIds ?: listOf())
                 Result.Success(exercises)
             } catch (e: Exception) {
                 Result.Error(e)

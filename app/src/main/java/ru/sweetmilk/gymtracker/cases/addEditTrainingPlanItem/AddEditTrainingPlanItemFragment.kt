@@ -7,13 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import ru.sweetmilk.gymtracker.GymApplication
 import ru.sweetmilk.gymtracker.databinding.FragAddEditTrainingPlanItemBinding
+import java.util.UUID
 
 import javax.inject.Inject
 
@@ -23,6 +24,7 @@ class AddEditTrainingPlanItemFragment : Fragment() {
     private val viewModel by viewModels<AddEditTrainingPlanItemViewModel> {
         viewModelProviderFactory
     }
+    private val args: AddEditTrainingPlanItemFragmentArgs by navArgs()
 
     private var _binding: FragAddEditTrainingPlanItemBinding? = null
     private val binding get() = _binding!!
@@ -39,7 +41,11 @@ class AddEditTrainingPlanItemFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.init()
+
+        viewModel.init(
+            args.exerciseAndTrainingPlanItems,
+            args.excludedExerciseIds?.map { UUID.fromString(it) })
+
     }
 
     override fun onCreateView(
@@ -88,6 +94,10 @@ class AddEditTrainingPlanItemFragment : Fragment() {
         }
         binding.exerciseSelector.setOnItemClickListener { _, _, position, _ ->
             viewModel.selectExercise(position)
+        }
+        viewModel.initExerciseEvent.observe(viewLifecycleOwner) {
+            val selectedValue = binding.exerciseSelector.adapter.getItem(it)
+            binding.exerciseSelector.setText(selectedValue.toString())
         }
     }
 
