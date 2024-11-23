@@ -24,7 +24,7 @@
             tools:text="Упражнение" />
 
         <TextView
-            android:id="@+id/exercise_training_plan"
+            android:id="@+id/training_plan_sets"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="1 подход: 12 раз\n1 подход: 13 раз" />

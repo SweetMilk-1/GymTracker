@@ -9,11 +9,11 @@
 
         <variable
             name="itemObservable"
-            type="ru.sweetmilk.gymtracker.cases.addEditTrainingPlanItem.TrainingPlanItemObservable" />
+            type="ru.sweetmilk.gymtracker.cases.addEditTrainingPlanExercise.TrainingPlanSetObservable" />
 
         <variable
             name="viewModel"
-            type="ru.sweetmilk.gymtracker.cases.addEditTrainingPlanItem.AddEditTrainingPlanItemViewModel" />
+            type="ru.sweetmilk.gymtracker.cases.addEditTrainingPlanExercise.AddEditTrainingPlanExerciseViewModel" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -26,7 +26,7 @@
         android:weightSum="7">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/training_plan_weight"
+            android:id="@+id/training_plan_set_weight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -42,7 +42,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/training_plan_duration"
+            android:id="@+id/training_plan_set_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -58,7 +58,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/training_plan_count"
+            android:id="@+id/training_plan_set_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -74,7 +74,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageView
-            android:id="@+id/training_plan_item_remove_button"
+            android:id="@+id/training_plan_set_remove"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

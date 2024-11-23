@@ -5,7 +5,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewModel"
-            type="ru.sweetmilk.gymtracker.cases.addEditTrainingPlanItem.AddEditTrainingPlanItemViewModel" />
+            type="ru.sweetmilk.gymtracker.cases.addEditTrainingPlanExercise.AddEditTrainingPlanExerciseViewModel" />
     </data>
 
     <FrameLayout
@@ -22,7 +22,7 @@
             android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/training_plan_form"
+            android:id="@+id/training_plan_exercise_form"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="8dp"
@@ -35,7 +35,6 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent">
 
-
                 <AutoCompleteTextView
                     android:id="@+id/exercise_selector"
                     android:layout_width="match_parent"
@@ -45,7 +44,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/trainingPlanList"
+                android:id="@+id/training_plan_sets"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="8dp"

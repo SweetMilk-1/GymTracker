@@ -4,50 +4,50 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import kotlinx.coroutines.withContext
 import ru.sweetmilk.gymtracker.data.database.AppDatabase
-import ru.sweetmilk.gymtracker.data.entities.ExerciseAndTrainingPlanItems
+import ru.sweetmilk.gymtracker.data.entities.TrainingPlanExercise
 import ru.sweetmilk.gymtracker.data.repositories.TrainingPlanRepo
 import kotlin.coroutines.CoroutineContext
 import ru.sweetmilk.gymtracker.data.Result
-import ru.sweetmilk.gymtracker.data.entities.TrainingPlanItem
+import ru.sweetmilk.gymtracker.data.entities.TrainingPlanSet
 
 class TrainingPlanRepoImpl(
     private val database: AppDatabase,
     private val coroutineContext: CoroutineContext
 ) : TrainingPlanRepo {
-    override fun getTrainingPlanObservable(): LiveData<Result<List<ExerciseAndTrainingPlanItems>>> =
-        database.getTrainingPlanItemDao().getTrainingPlanObservable().map {
+    override fun getTrainingPlanObservable(): LiveData<Result<List<TrainingPlanExercise>>> =
+        database.getTrainingPlanDao().getTrainingPlanObservable().map {
             Result.Success(filterTrainingPlanItems(it))
         }
 
-    override suspend fun getTrainingPlan(): Result<List<ExerciseAndTrainingPlanItems>> =
+    override suspend fun getTrainingPlan(): Result<List<TrainingPlanExercise>> =
         withContext(coroutineContext) {
             try {
                 val trainingPlanExercises =
-                    filterTrainingPlanItems(database.getTrainingPlanItemDao().getTrainingPlan())
+                    filterTrainingPlanItems(database.getTrainingPlanDao().getTrainingPlan())
                 Result.Success(trainingPlanExercises)
             } catch (e: Exception) {
                 Result.Error(e)
             }
         }
 
-    private fun filterTrainingPlanItems(list: List<ExerciseAndTrainingPlanItems>): List<ExerciseAndTrainingPlanItems> {
+    private fun filterTrainingPlanItems(list: List<TrainingPlanExercise>): List<TrainingPlanExercise> {
         return list.filter {
-            it.trainingPlanItems.isNotEmpty()
+            it.trainingPlanSets.isNotEmpty()
         }.onEach {
-            it.trainingPlanItems = it.trainingPlanItems.sortedBy {
+            it.trainingPlanSets = it.trainingPlanSets.sortedBy {
                 it.sortNumber
             }
         }.sortedBy {
-            it.trainingPlanItems[0].sortNumber
+            it.trainingPlanSets[0].sortNumber
         }
     }
 
-    override suspend fun upsertTrainingPlanItems(list: List<TrainingPlanItem>) =
+    override suspend fun upsertTrainingPlanItems(list: List<TrainingPlanSet>) =
         withContext(coroutineContext) {
             for ((index, value) in list.withIndex()) {
                 value.sortNumber = index + 1
             }
-            database.getTrainingPlanItemDao().deleteAllTrainingPlanItems()
-            database.getTrainingPlanItemDao().upsertAllTrainingPlanItems(list)
+            database.getTrainingPlanDao().deleteAllTrainingPlanSets()
+            database.getTrainingPlanDao().upsertAllTrainingPlanSets(list)
         }
 }

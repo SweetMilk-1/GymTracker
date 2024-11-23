@@ -1,6 +1,5 @@
-package ru.sweetmilk.gymtracker.cases.addEditTrainingPlanItem
+package ru.sweetmilk.gymtracker.cases.addEditTrainingPlanExercise
 
-import android.R
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,28 +13,28 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import ru.sweetmilk.gymtracker.GymApplication
-import ru.sweetmilk.gymtracker.databinding.FragAddEditTrainingPlanItemBinding
+import ru.sweetmilk.gymtracker.databinding.FragAddEditTrainingPlanExerciseBinding
 import java.util.UUID
 
 import javax.inject.Inject
 
-class AddEditTrainingPlanItemFragment : Fragment() {
+class AddEditTrainingPlanExerciseFragment : Fragment() {
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProvider.Factory
-    private val viewModel by viewModels<AddEditTrainingPlanItemViewModel> {
+    private val viewModel by viewModels<AddEditTrainingPlanExerciseViewModel> {
         viewModelProviderFactory
     }
-    private val args: AddEditTrainingPlanItemFragmentArgs by navArgs()
+    private val args: AddEditTrainingPlanExerciseFragmentArgs by navArgs()
 
-    private var _binding: FragAddEditTrainingPlanItemBinding? = null
+    private var _binding: FragAddEditTrainingPlanExerciseBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var adapter: TrainingPlanListAdapter
+    private lateinit var adapter: TrainingPlanSetsAdapter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (requireActivity().application as GymApplication).appComponent
-            .addAddEditTrainingPlanItemComponent()
+            .addAddEditTrainingPlanExerciseComponent()
             .create()
             .inject(this)
     }
@@ -44,7 +43,7 @@ class AddEditTrainingPlanItemFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         viewModel.init(
-            args.exerciseAndTrainingPlanItems,
+            args.trainingPlanExercise,
             args.excludedExerciseIds?.map { UUID.fromString(it) })
 
     }
@@ -54,7 +53,7 @@ class AddEditTrainingPlanItemFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragAddEditTrainingPlanItemBinding.inflate(inflater, container, false)
+        _binding = FragAddEditTrainingPlanExerciseBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -66,7 +65,7 @@ class AddEditTrainingPlanItemFragment : Fragment() {
 
         setupNavigation()
         setupExerciseSelector()
-        setupTrainingPlanList()
+        setupTrainingPlanSets()
         setupSnackBar()
 
     }
@@ -74,7 +73,7 @@ class AddEditTrainingPlanItemFragment : Fragment() {
     private fun setupNavigation() {
         viewModel.saveTrainingPlanItems.observe(viewLifecycleOwner) {
             val action =
-                AddEditTrainingPlanItemFragmentDirections.actionAddEditTrainingPlanItemToTrainingPlan(
+                AddEditTrainingPlanExerciseFragmentDirections.actionAddEditTrainingPlanExerciseToTrainingPlan(
                     it
                 )
             findNavController().navigate(action)
@@ -87,11 +86,10 @@ class AddEditTrainingPlanItemFragment : Fragment() {
         }
     }
 
-
-    private fun setupTrainingPlanList() {
-        adapter = TrainingPlanListAdapter(viewModel, layoutInflater)
-        binding.trainingPlanList.adapter = adapter
-        viewModel.trainingPlanItems.observe(viewLifecycleOwner) {
+    private fun setupTrainingPlanSets() {
+        adapter = TrainingPlanSetsAdapter(viewModel, layoutInflater)
+        binding.trainingPlanSets.adapter = adapter
+        viewModel.trainingPlanSets.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
     }
@@ -100,7 +98,7 @@ class AddEditTrainingPlanItemFragment : Fragment() {
         viewModel.exercises.observe(viewLifecycleOwner) { exercises ->
             val exerciseNames = exercises.map { it.name }
             val adapter =
-                ArrayAdapter(requireContext(), R.layout.simple_dropdown_item_1line, exerciseNames)
+                ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, exerciseNames)
             binding.exerciseSelector.apply {
                 setAdapter(adapter)
             }
@@ -113,7 +111,6 @@ class AddEditTrainingPlanItemFragment : Fragment() {
             binding.exerciseSelector.setText(selectedValue.toString())
         }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

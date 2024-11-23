@@ -4,11 +4,11 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import java.io.Serializable
 
-data class ExerciseAndTrainingPlanItems (
+data class TrainingPlanExercise (
     @Embedded val exercise: Exercise,
     @Relation(
         parentColumn = "id",
         entityColumn = "exercise_id"
     )
-    var trainingPlanItems: List<TrainingPlanItem>
+    var trainingPlanSets: List<TrainingPlanSet>
 ) : Serializable

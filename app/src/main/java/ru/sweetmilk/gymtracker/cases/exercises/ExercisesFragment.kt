@@ -63,7 +63,7 @@ class ExercisesFragment : Fragment() {
 
     private fun setupExerciseList() {
         adapter = ExercisesAdapter(viewModel, layoutInflater)
-        binding.exercisesList.adapter = adapter
+        binding.trainingPlanExercises.adapter = adapter
         viewModel.items.observe(viewLifecycleOwner) {
             adapter.submitList((it as Result.Success).data)
         }

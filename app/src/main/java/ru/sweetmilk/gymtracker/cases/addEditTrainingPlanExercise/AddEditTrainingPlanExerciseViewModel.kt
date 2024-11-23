@@ -1,4 +1,4 @@
-package ru.sweetmilk.gymtracker.cases.addEditTrainingPlanItem
+package ru.sweetmilk.gymtracker.cases.addEditTrainingPlanExercise
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,13 +10,13 @@ import ru.sweetmilk.gymtracker.R
 import ru.sweetmilk.gymtracker.SingleLiveEvent
 import ru.sweetmilk.gymtracker.data.Result
 import ru.sweetmilk.gymtracker.data.entities.Exercise
-import ru.sweetmilk.gymtracker.data.entities.ExerciseAndTrainingPlanItems
-import ru.sweetmilk.gymtracker.data.entities.TrainingPlanItem
+import ru.sweetmilk.gymtracker.data.entities.TrainingPlanExercise
+import ru.sweetmilk.gymtracker.data.entities.TrainingPlanSet
 import ru.sweetmilk.gymtracker.data.repositories.ExerciseRepo
 import java.util.UUID
 import javax.inject.Inject
 
-class AddEditTrainingPlanItemViewModel @Inject constructor(
+class AddEditTrainingPlanExerciseViewModel @Inject constructor(
     private val exerciseRepo: ExerciseRepo
 ) : ViewModel() {
 
@@ -30,22 +30,22 @@ class AddEditTrainingPlanItemViewModel @Inject constructor(
     private var _hasDuration = MutableLiveData(false)
     val hasDuration: LiveData<Boolean> get() = _hasDuration
 
-    private val _trainingPlanItems = MutableLiveData<List<TrainingPlanItem>>(listOf())
-    val trainingPlanItems: LiveData<List<TrainingPlanItem>> get() = _trainingPlanItems
+    private val _trainingPlanSets = MutableLiveData<List<TrainingPlanSet>>(listOf())
+    val trainingPlanSets: LiveData<List<TrainingPlanSet>> get() = _trainingPlanSets
 
-    val isNotEmpty: LiveData<Boolean> = trainingPlanItems.map { it.isNotEmpty() }
+    val isNotEmpty: LiveData<Boolean> = trainingPlanSets.map { it.isNotEmpty() }
 
     private var selectedExercise: Exercise? = null
 
     //Events
     val snackbarMessageEvent = SingleLiveEvent<Int>()
     val initExerciseEvent = SingleLiveEvent<Int>()
-    val saveTrainingPlanItems = SingleLiveEvent<ExerciseAndTrainingPlanItems>()
+    val saveTrainingPlanItems = SingleLiveEvent<TrainingPlanExercise>()
 
     private var viewModelInitialized = false
 
     fun init(
-        exerciseAndTrainingPlanItems: ExerciseAndTrainingPlanItems?,
+        trainingPlanExercise: TrainingPlanExercise?,
         excludedExerciseIds: List<UUID>?
     ) {
         if (viewModelInitialized)
@@ -56,7 +56,7 @@ class AddEditTrainingPlanItemViewModel @Inject constructor(
         _isLoading.value = true
         viewModelScope.launch {
             val excludedExerciseIdsList = excludedExerciseIds?.toMutableList()
-                ?.filter { it != exerciseAndTrainingPlanItems?.exercise?.id }
+                ?.filter { it != trainingPlanExercise?.exercise?.id }
 
             when (val response = exerciseRepo.getAllExercises(excludedExerciseIdsList)) {
                 is Result.Success -> _exercises.value = response.data
@@ -64,9 +64,9 @@ class AddEditTrainingPlanItemViewModel @Inject constructor(
             }
             _isLoading.value = false
 
-            if (exerciseAndTrainingPlanItems != null) {
-                _trainingPlanItems.value = exerciseAndTrainingPlanItems.trainingPlanItems
-                selectExercise(exerciseAndTrainingPlanItems.exercise)
+            if (trainingPlanExercise != null) {
+                _trainingPlanSets.value = trainingPlanExercise.trainingPlanSets
+                selectExercise(trainingPlanExercise.exercise)
 
                 val exercisePosition =
                     exercises.value?.indexOfFirst { it.id == selectedExercise?.id }
@@ -79,7 +79,7 @@ class AddEditTrainingPlanItemViewModel @Inject constructor(
     fun selectExercise(position: Int) {
         val newSelectedExercise = exercises.value?.get(position) ?: return
         if (hasDuration.value != newSelectedExercise.hasDuration) {
-            _trainingPlanItems.value = listOf()
+            _trainingPlanSets.value = listOf()
         }
         selectExercise(newSelectedExercise)
     }
@@ -94,27 +94,27 @@ class AddEditTrainingPlanItemViewModel @Inject constructor(
             snackbarMessageEvent.value = R.string.choose_exercise
             return
         }
-        val list = trainingPlanItems.value?.toMutableList() ?: return
-        list.add(TrainingPlanItem(selectedExercise!!.id))
-        _trainingPlanItems.value = list
+        val list = trainingPlanSets.value?.toMutableList() ?: return
+        list.add(TrainingPlanSet(selectedExercise!!.id))
+        _trainingPlanSets.value = list
     }
 
     fun removeTrainingPlanItem(id: UUID) {
-        val list = trainingPlanItems.value?.toMutableList() ?: return
-        _trainingPlanItems.value = list.filter { it.id != id }
+        val list = trainingPlanSets.value?.toMutableList() ?: return
+        _trainingPlanSets.value = list.filter { it.id != id }
     }
 
-    fun updateTrainingPlanItem(item: TrainingPlanItem) {
-        val list = trainingPlanItems.value?.toMutableList() ?: return
+    fun updateTrainingPlanItem(item: TrainingPlanSet) {
+        val list = trainingPlanSets.value?.toMutableList() ?: return
         val itemPosition = list.indexOfFirst { it.id == item.id }
         list[itemPosition] = item
-        _trainingPlanItems.value = list
+        _trainingPlanSets.value = list
     }
 
     fun onSave() {
-        if (trainingPlanItems.value?.isEmpty() != true && selectedExercise != null) {
+        if (trainingPlanSets.value?.isEmpty() != true && selectedExercise != null) {
             saveTrainingPlanItems.value =
-                ExerciseAndTrainingPlanItems(selectedExercise!!, trainingPlanItems.value!!)
+                TrainingPlanExercise(selectedExercise!!, trainingPlanSets.value!!)
         }
     }
 }

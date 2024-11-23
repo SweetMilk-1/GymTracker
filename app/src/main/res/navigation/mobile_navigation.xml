@@ -74,32 +74,32 @@
         tools:layout="@layout/frag_training_plan">
 
         <argument
-            android:name="exerciseAndTrainingPlanItems"
+            android:name="updatedTrainingPlanExercise"
             android:defaultValue="@null"
-            app:argType="ru.sweetmilk.gymtracker.data.entities.ExerciseAndTrainingPlanItems"
+            app:argType="ru.sweetmilk.gymtracker.data.entities.TrainingPlanExercise"
             app:nullable="true" />
 
         <action
-            android:id="@+id/action_trainingPlan_to_nav_addEditTrainingPlanItem"
-            app:destination="@id/nav_add_edit_training_plan_item" />
+            android:id="@+id/action_trainingPlan_to_nav_addEditTrainingPlanExercise"
+            app:destination="@id/nav_add_edit_training_plan_exercise" />
     </fragment>
 
     <fragment
-        android:id="@+id/nav_add_edit_training_plan_item"
-        android:name="ru.sweetmilk.gymtracker.cases.addEditTrainingPlanItem.AddEditTrainingPlanItemFragment"
+        android:id="@+id/nav_add_edit_training_plan_exercise"
+        android:name="ru.sweetmilk.gymtracker.cases.addEditTrainingPlanExercise.AddEditTrainingPlanExerciseFragment"
         android:label="@string/add_exercise_label"
-        tools:layout="@layout/add_new_training_plan_item">
+        tools:layout="@layout/add_new_training_plan_set_button">
 
         <action
-            android:id="@+id/action_addEditTrainingPlanItem_to_trainingPlan"
+            android:id="@+id/action_addEditTrainingPlanExercise_to_trainingPlan"
             app:destination="@id/nav_training_plan"
             app:popUpTo="@id/nav_training_plan"
             app:popUpToInclusive="true"/>
 
         <argument
-            android:name="exerciseAndTrainingPlanItems"
+            android:name="trainingPlanExercise"
             android:defaultValue="@null"
-            app:argType="ru.sweetmilk.gymtracker.data.entities.ExerciseAndTrainingPlanItems"
+            app:argType="ru.sweetmilk.gymtracker.data.entities.TrainingPlanExercise"
             app:nullable="true" />
         <argument
             android:name="excludedExerciseIds"

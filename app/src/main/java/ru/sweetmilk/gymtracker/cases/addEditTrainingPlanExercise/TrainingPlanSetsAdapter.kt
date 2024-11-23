@@ -1,4 +1,4 @@
-package ru.sweetmilk.gymtracker.cases.addEditTrainingPlanItem
+package ru.sweetmilk.gymtracker.cases.addEditTrainingPlanExercise
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,16 +6,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import ru.sweetmilk.gymtracker.data.entities.TrainingPlanItem
-import ru.sweetmilk.gymtracker.databinding.AddNewTrainingPlanItemBinding
-import ru.sweetmilk.gymtracker.databinding.TrainingPlanItemBinding
+import ru.sweetmilk.gymtracker.data.entities.TrainingPlanSet
+import ru.sweetmilk.gymtracker.databinding.AddNewTrainingPlanSetButtonBinding
+import ru.sweetmilk.gymtracker.databinding.TrainingPlanSetItemBinding
 
 
-class TrainingPlanListAdapter(
-    private val viewModel: AddEditTrainingPlanItemViewModel,
+class TrainingPlanSetsAdapter(
+    private val viewModel: AddEditTrainingPlanExerciseViewModel,
     private val inflater: LayoutInflater
 ) :
-    ListAdapter<TrainingPlanItem, TrainingPlanItemHolder>(TrainingPlanItemDiffUtilCallback) {
+    ListAdapter<TrainingPlanSet, TrainingPlanItemHolder>(TrainingPlanItemDiffUtilCallback) {
 
     override fun getItemViewType(position: Int): Int {
         return if (position == currentList.size) ADD_NEW_TYPE else COMMON_TYPE
@@ -28,12 +28,12 @@ class TrainingPlanListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrainingPlanItemHolder {
         return when (viewType) {
             COMMON_TYPE -> {
-                val binding = TrainingPlanItemBinding.inflate(inflater, parent, false)
-                TrainingPlanItemFormHolder(binding)
+                val binding = TrainingPlanSetItemBinding.inflate(inflater, parent, false)
+                TrainingPlanSetItemHolder(binding)
             }
 
             ADD_NEW_TYPE -> {
-                val binding = AddNewTrainingPlanItemBinding.inflate(inflater, parent, false)
+                val binding = AddNewTrainingPlanSetButtonBinding.inflate(inflater, parent, false)
                 AddNewTrainingPlanItemHolder(viewModel, binding)
             }
 
@@ -44,7 +44,7 @@ class TrainingPlanListAdapter(
     override fun onBindViewHolder(holder: TrainingPlanItemHolder, position: Int) {
         if (getItemViewType(position) == COMMON_TYPE) {
             val item = getItem(position)
-            (holder as TrainingPlanItemFormHolder).bind(item, viewModel)
+            (holder as TrainingPlanSetItemHolder).bind(item, viewModel)
         }
     }
 
@@ -56,25 +56,25 @@ class TrainingPlanListAdapter(
 
 abstract class TrainingPlanItemHolder(view: View) : ViewHolder(view)
 
-class TrainingPlanItemFormHolder(private val binding: TrainingPlanItemBinding) :
+class TrainingPlanSetItemHolder(private val binding: TrainingPlanSetItemBinding) :
     TrainingPlanItemHolder(binding.root) {
 
-    lateinit var item: TrainingPlanItem
+    lateinit var item: TrainingPlanSet
 
-    fun bind(trainingPlanItem: TrainingPlanItem, viewModel: AddEditTrainingPlanItemViewModel) {
-        this.item = trainingPlanItem.copy()
+    fun bind(trainingPlanSet: TrainingPlanSet, viewModel: AddEditTrainingPlanExerciseViewModel) {
+        this.item = trainingPlanSet.copy()
         binding.viewModel = viewModel
 
         if (binding.itemObservable == null)
-            binding.itemObservable = TrainingPlanItemObservable(viewModel)
+            binding.itemObservable = TrainingPlanSetObservable(viewModel)
 
-        binding.itemObservable?.setTrainingPlanItem(trainingPlanItem)
+        binding.itemObservable?.setTrainingPlanItem(trainingPlanSet)
     }
 }
 
 class AddNewTrainingPlanItemHolder(
-    private val viewModel: AddEditTrainingPlanItemViewModel,
-    binding: AddNewTrainingPlanItemBinding
+    private val viewModel: AddEditTrainingPlanExerciseViewModel,
+    binding: AddNewTrainingPlanSetButtonBinding
 ) :
     TrainingPlanItemHolder(binding.root) {
     init {
@@ -84,12 +84,12 @@ class AddNewTrainingPlanItemHolder(
     }
 }
 
-object TrainingPlanItemDiffUtilCallback : DiffUtil.ItemCallback<TrainingPlanItem>() {
-    override fun areItemsTheSame(oldItem: TrainingPlanItem, newItem: TrainingPlanItem): Boolean {
+object TrainingPlanItemDiffUtilCallback : DiffUtil.ItemCallback<TrainingPlanSet>() {
+    override fun areItemsTheSame(oldItem: TrainingPlanSet, newItem: TrainingPlanSet): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: TrainingPlanItem, newItem: TrainingPlanItem): Boolean {
+    override fun areContentsTheSame(oldItem: TrainingPlanSet, newItem: TrainingPlanSet): Boolean {
         return oldItem == newItem
     }
 }

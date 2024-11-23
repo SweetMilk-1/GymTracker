@@ -41,7 +41,7 @@ class TrainingPlanFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.init(args.exerciseAndTrainingPlanItems)
+        viewModel.init(args.updatedTrainingPlanExercise)
     }
 
     override fun onCreateView(
@@ -60,13 +60,13 @@ class TrainingPlanFragment : Fragment() {
 
         setupNavigation()
         setupSnackBar()
-        setupExercisesList()
+        setupTrainingPlanExercises()
     }
 
-    private fun setupExercisesList() {
+    private fun setupTrainingPlanExercises() {
         adapter = ExerciseAndTrainingPlanItemsAdapter(layoutInflater, viewModel)
-        binding.exercisesList.adapter = adapter
-        viewModel.exercisesAndTrainingPlanItems.observe(viewLifecycleOwner) {
+        binding.trainingPlanExercises.adapter = adapter
+        viewModel.trainingPlanExercises.observe(viewLifecycleOwner) {
             when (it) {
                 is Result.Success -> adapter.submitList(it.data)
                 else -> Unit
@@ -75,17 +75,17 @@ class TrainingPlanFragment : Fragment() {
     }
 
     private fun setupNavigation() {
-        viewModel.createNewTrainingPlanItemEvent.observe(viewLifecycleOwner) {
+        viewModel.createNewTrainingPlanExerciseEvent.observe(viewLifecycleOwner) {
             val action =
-                TrainingPlanFragmentDirections.actionTrainingPlanToNavAddEditTrainingPlanItem(
+                TrainingPlanFragmentDirections.actionTrainingPlanToNavAddEditTrainingPlanExercise(
                     null,
                     viewModel.getUsingExerciseIds()?.toTypedArray()
                 )
             findNavController().navigate(action)
         }
-        viewModel.updateTrainingPlanItemEvent.observe(viewLifecycleOwner) {
+        viewModel.updateTrainingPlanExerciseEvent.observe(viewLifecycleOwner) {
             val action =
-                TrainingPlanFragmentDirections.actionTrainingPlanToNavAddEditTrainingPlanItem(
+                TrainingPlanFragmentDirections.actionTrainingPlanToNavAddEditTrainingPlanExercise(
                     it,
                     viewModel.getUsingExerciseIds()?.toTypedArray()
                 )

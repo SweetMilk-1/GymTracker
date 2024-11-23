@@ -9,10 +9,9 @@ import kotlinx.coroutines.launch
 import ru.sweetmilk.gymtracker.R
 import ru.sweetmilk.gymtracker.SingleLiveEvent
 import ru.sweetmilk.gymtracker.data.Result
-import ru.sweetmilk.gymtracker.data.entities.ExerciseAndTrainingPlanItems
-import ru.sweetmilk.gymtracker.data.entities.TrainingPlanItem
+import ru.sweetmilk.gymtracker.data.entities.TrainingPlanExercise
+import ru.sweetmilk.gymtracker.data.entities.TrainingPlanSet
 import ru.sweetmilk.gymtracker.data.repositories.TrainingPlanRepo
-import java.util.UUID
 import javax.inject.Inject
 
 class TrainingPlanViewModel @Inject constructor(
@@ -22,10 +21,10 @@ class TrainingPlanViewModel @Inject constructor(
     private val _isLoading = MutableLiveData<Boolean>(false)
     val isLoading: LiveData<Boolean> get() = _isLoading
 
-    val exercisesAndTrainingPlanItems: LiveData<Result<List<ExerciseAndTrainingPlanItems>>> =
+    val trainingPlanExercises: LiveData<Result<List<TrainingPlanExercise>>> =
         trainingPlanRepo.getTrainingPlanObservable()
 
-    val isEmpty: LiveData<Boolean> = exercisesAndTrainingPlanItems.map {
+    val isEmpty: LiveData<Boolean> = trainingPlanExercises.map {
         when (it) {
             is Result.Success -> it.data.isEmpty()
             else -> false
@@ -33,24 +32,24 @@ class TrainingPlanViewModel @Inject constructor(
     }
 
     //Events
-    val createNewTrainingPlanItemEvent = SingleLiveEvent<Unit>()
-    val updateTrainingPlanItemEvent = SingleLiveEvent<ExerciseAndTrainingPlanItems>()
+    val createNewTrainingPlanExerciseEvent = SingleLiveEvent<Unit>()
+    val updateTrainingPlanExerciseEvent = SingleLiveEvent<TrainingPlanExercise>()
     val snackbarMessageEvent = SingleLiveEvent<Int>()
 
     private var viewModelInitialized = false
 
-    fun init(exerciseAndTrainingPlanItems: ExerciseAndTrainingPlanItems?) {
+    fun init(trainingPlanExercise: TrainingPlanExercise?) {
         if (viewModelInitialized)
             return
         viewModelInitialized = true
 
-        if (exerciseAndTrainingPlanItems != null) {
+        if (trainingPlanExercise != null) {
             _isLoading.value = true
             viewModelScope.launch {
                 when (val trainingPlanResult = trainingPlanRepo.getTrainingPlan()) {
                     is Result.Success -> updateTrainingPlan(
                         trainingPlanResult.data,
-                        exerciseAndTrainingPlanItems
+                        trainingPlanExercise
                     )
 
                     else -> snackbarMessageEvent.value = R.string.could_not_load_data
@@ -61,39 +60,39 @@ class TrainingPlanViewModel @Inject constructor(
     }
 
     private suspend fun updateTrainingPlan(
-        data: List<ExerciseAndTrainingPlanItems>,
-        exerciseAndTrainingPlanItems: ExerciseAndTrainingPlanItems
+        data: List<TrainingPlanExercise>,
+        trainingPlanExercise: TrainingPlanExercise
     ) {
-        val index = data.indexOfFirst { it.exercise.id == exerciseAndTrainingPlanItems.exercise.id }
+        val index = data.indexOfFirst { it.exercise.id == trainingPlanExercise.exercise.id }
 
         val updatedList = if (index == -1) {
             data.toMutableList().apply {
-                add(exerciseAndTrainingPlanItems)
+                add(trainingPlanExercise)
             }
         } else {
             data.toMutableList().apply {
-                this[index] = exerciseAndTrainingPlanItems
+                this[index] = trainingPlanExercise
             }
         }
-        val trainingPlanItems = mutableListOf<TrainingPlanItem>()
+        val trainingPlanSets = mutableListOf<TrainingPlanSet>()
         for (item in updatedList) {
-            trainingPlanItems.addAll(item.trainingPlanItems)
+            trainingPlanSets.addAll(item.trainingPlanSets)
         }
 
-        trainingPlanRepo.upsertTrainingPlanItems(trainingPlanItems)
+        trainingPlanRepo.upsertTrainingPlanItems(trainingPlanSets)
     }
 
     fun createNewTrainingPlanItem() {
-        createNewTrainingPlanItemEvent.value = Unit
+        createNewTrainingPlanExerciseEvent.value = Unit
     }
 
-    fun updateTrainingPlanItem(item: ExerciseAndTrainingPlanItems) {
-        updateTrainingPlanItemEvent.value = item
+    fun updateTrainingPlanItem(item: TrainingPlanExercise) {
+        updateTrainingPlanExerciseEvent.value = item
     }
 
     fun getUsingExerciseIds(): List<String>? {
-        return if (exercisesAndTrainingPlanItems.value is Result.Success) {
-            (exercisesAndTrainingPlanItems.value as? Result.Success)?.data?.map { it.exercise.id.toString() }
+        return if (trainingPlanExercises.value is Result.Success) {
+            (trainingPlanExercises.value as? Result.Success)?.data?.map { it.exercise.id.toString() }
         } else null
     }
 }
