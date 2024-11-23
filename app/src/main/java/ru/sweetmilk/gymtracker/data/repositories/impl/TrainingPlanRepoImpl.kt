@@ -50,4 +50,8 @@ class TrainingPlanRepoImpl(
             database.getTrainingPlanDao().deleteAllTrainingPlanSets()
             database.getTrainingPlanDao().upsertAllTrainingPlanSets(list)
         }
+
+    override suspend fun deleteTrainingPlanExercise(item: TrainingPlanExercise) = withContext(coroutineContext) {
+        database.getTrainingPlanDao().deleteTrainingPlanSetsByExerciseId(item.exercise.id)
+    }
 }

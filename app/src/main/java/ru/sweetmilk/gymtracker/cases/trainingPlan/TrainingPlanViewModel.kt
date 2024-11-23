@@ -82,12 +82,19 @@ class TrainingPlanViewModel @Inject constructor(
         trainingPlanRepo.upsertTrainingPlanItems(trainingPlanSets)
     }
 
-    fun createNewTrainingPlanItem() {
+    fun createNewTrainingPlanExercise() {
         createNewTrainingPlanExerciseEvent.value = Unit
     }
 
-    fun updateTrainingPlanItem(item: TrainingPlanExercise) {
+    fun updateTrainingPlanExercise(item: TrainingPlanExercise) {
         updateTrainingPlanExerciseEvent.value = item
+    }
+
+    fun deleteTrainingPlanExercise(item: TrainingPlanExercise) {
+        viewModelScope.launch {
+            trainingPlanRepo.deleteTrainingPlanExercise(item)
+        }
+        snackbarMessageEvent.value = R.string.delete_exercise_completed
     }
 
     fun getUsingExerciseIds(): List<String>? {

@@ -44,6 +44,9 @@ class TrainingPlanExerciseHolder(
 
     init {
         itemView.setOnClickListener(this)
+        binding.deleteExercise.setOnClickListener{
+            viewModel.deleteTrainingPlanExercise(trainingPlanExercise)
+        }
     }
 
     fun bind(trainingPlanExercise: TrainingPlanExercise) {
@@ -120,7 +123,7 @@ class TrainingPlanExerciseHolder(
         }.joinToString("\n")
 
     override fun onClick(v: View?) {
-        viewModel.updateTrainingPlanItem(trainingPlanExercise)
+        viewModel.updateTrainingPlanExercise(trainingPlanExercise)
     }
 }
 

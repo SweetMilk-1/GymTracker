@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="@dimen/floating_action_button_margin"
-            android:onClick="@{() -> viewModel.createNewTrainingPlanItem()}"
+            android:onClick="@{() -> viewModel.createNewTrainingPlanExercise()}"
             android:src="@drawable/ic_add"
             android:visibility="@{viewModel.isLoading ? View.GONE : View.VISIBLE }"
             app:backgroundTint="?attr/colorPrimary"
