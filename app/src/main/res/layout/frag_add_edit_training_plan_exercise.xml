@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="ru.sweetmilk.gymtracker.cases.addEditTrainingPlanExercise.AddEditTrainingPlanExerciseViewModel" />
@@ -19,7 +22,7 @@
             android:layout_height="@dimen/progress_bar_size"
             android:layout_gravity="center"
             android:indeterminate="true"
-            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"/>
+            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/training_plan_exercise_form"
@@ -41,6 +44,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/exercise_selector_label"
                     android:inputType="none" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -56,12 +60,12 @@
                 android:id="@+id/save_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/save_button"
                 android:enabled="@{viewModel.isNotEmpty}"
+                android:onClick="@{() -> viewModel.onSave()}"
+                android:text="@string/save_button"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:onClick="@{() -> viewModel.onSave()}"/>
+                app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 </layout>

@@ -45,7 +45,6 @@ class AddEditTrainingPlanExerciseFragment : Fragment() {
         viewModel.init(
             args.trainingPlanExercise,
             args.excludedExerciseIds?.map { UUID.fromString(it) })
-
     }
 
     override fun onCreateView(
@@ -67,7 +66,6 @@ class AddEditTrainingPlanExerciseFragment : Fragment() {
         setupExerciseSelector()
         setupTrainingPlanSets()
         setupSnackBar()
-
     }
 
     private fun setupNavigation() {
@@ -108,7 +106,7 @@ class AddEditTrainingPlanExerciseFragment : Fragment() {
         }
         viewModel.initExerciseEvent.observe(viewLifecycleOwner) {
             val selectedValue = binding.exerciseSelector.adapter.getItem(it)
-            binding.exerciseSelector.setText(selectedValue.toString())
+            binding.exerciseSelector.setText(selectedValue.toString(), false)
         }
     }
 
