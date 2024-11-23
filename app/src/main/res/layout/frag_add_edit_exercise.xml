@@ -82,7 +82,9 @@
             android:onClick="@{() -> viewModel.saveExercise()}"
             android:src="@drawable/ic_done"
             android:visibility="@{viewModel.isLoading ? View.GONE : View.VISIBLE }"
+            app:backgroundTint="?attr/colorPrimary"
             app:fabSize="normal"
-            app:layout_anchorGravity="bottom|right|end" />
+            app:layout_anchorGravity="bottom|right|end"
+            app:tint="?attr/colorOnPrimary" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
