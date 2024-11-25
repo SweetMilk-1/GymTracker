@@ -47,11 +47,12 @@ class TrainingPlanRepoImpl(
             for ((index, value) in list.withIndex()) {
                 value.sortNumber = index + 1
             }
-            database.getTrainingPlanDao().deleteAllTrainingPlanSets()
-            database.getTrainingPlanDao().upsertAllTrainingPlanSets(list)
+            database.getTrainingPlanDao().deleteUnusedTrainingPlanSets(list.map { it.id })
+            database.getTrainingPlanDao().upsertTrainingPlanSets(list)
         }
 
-    override suspend fun deleteTrainingPlanExercise(item: TrainingPlanExercise) = withContext(coroutineContext) {
-        database.getTrainingPlanDao().deleteTrainingPlanSetsByExerciseId(item.exercise.id)
-    }
+    override suspend fun deleteTrainingPlanExercise(item: TrainingPlanExercise) =
+        withContext(coroutineContext) {
+            database.getTrainingPlanDao().deleteTrainingPlanSetsByExerciseId(item.exercise.id)
+        }
 }

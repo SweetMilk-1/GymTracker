@@ -56,9 +56,7 @@
             android:layout_margin="@dimen/floating_action_button_margin"
             android:onClick="@{() -> viewModel.updateExercise()}"
             android:src="@drawable/ic_edit"
-            android:tint="?attr/colorOnPrimary"
             android:visibility="@{viewModel.isEmpty ? View.GONE : View.VISIBLE }"
-            app:backgroundTint="?attr/colorPrimary"
             app:fabSize="normal"
             app:layout_anchorGravity="bottom|right|end" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

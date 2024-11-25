@@ -49,10 +49,8 @@
             android:onClick="@{() -> viewModel.createNewTrainingPlanExercise()}"
             android:src="@drawable/ic_add"
             android:visibility="@{viewModel.isLoading ? View.GONE : View.VISIBLE }"
-            app:backgroundTint="?attr/colorPrimary"
             app:fabSize="normal"
-            app:layout_anchorGravity="bottom|right|end"
-            app:tint="?attr/colorOnPrimary" />
+            app:layout_anchorGravity="bottom|right|end" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 

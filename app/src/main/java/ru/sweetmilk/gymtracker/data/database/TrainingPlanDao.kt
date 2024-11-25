@@ -17,12 +17,12 @@ interface TrainingPlanDao {
     @Query("SELECT * FROM EXERCISES")
     suspend fun getTrainingPlan(): List<TrainingPlanExercise>
 
-    @Query("DELETE FROM TRAINING_PLAN_SETS")
-    suspend fun deleteAllTrainingPlanSets()
+    @Query("DELETE FROM TRAINING_PLAN_SETS WHERE id NOT IN (:usedTrainingPlanSetIds)")
+    suspend fun deleteUnusedTrainingPlanSets(usedTrainingPlanSetIds: List<UUID>)
 
     @Query("DELETE FROM TRAINING_PLAN_SETS where exercise_id = :exerciseId")
     suspend fun deleteTrainingPlanSetsByExerciseId(exerciseId: UUID)
 
    @Upsert
-    suspend fun upsertAllTrainingPlanSets(items: List<TrainingPlanSet>)
+    suspend fun upsertTrainingPlanSets(items: List<TrainingPlanSet>)
 }
