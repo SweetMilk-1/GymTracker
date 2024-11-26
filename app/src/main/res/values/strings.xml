@@ -14,7 +14,9 @@
     <string name="new_exercise_label">Новое упражнение</string>
     <string name="exercise_label">Упражнение</string>
     <string name="update_exercise_label">Редактирвовать упражнение</string>
-    <string name="delete_exercise">Удалить</string>
+    <string name="delete">Удалить</string>
+    <string name="move_up">Поднять</string>
+    <string name="move_down">Опустить</string>
     <string name="delete_exercise_completed">Упражнение удалено!</string>
     <string name="exercise_saved">Упражнение сохранено!</string>
     <string name="menu_training_plan">Тренировочный план</string>

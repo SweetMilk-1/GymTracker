@@ -47,7 +47,7 @@ class TrainingPlanViewModel @Inject constructor(
             _isLoading.value = true
             viewModelScope.launch {
                 when (val trainingPlanResult = trainingPlanRepo.getTrainingPlan()) {
-                    is Result.Success -> updateTrainingPlan(
+                    is Result.Success -> upsertTrainingPlan(
                         trainingPlanResult.data,
                         trainingPlanExercise
                     )
@@ -59,27 +59,33 @@ class TrainingPlanViewModel @Inject constructor(
         }
     }
 
-    private suspend fun updateTrainingPlan(
-        data: List<TrainingPlanExercise>,
-        trainingPlanExercise: TrainingPlanExercise
+    private suspend fun upsertTrainingPlan(
+        oldTrainingPlanExercises: List<TrainingPlanExercise>,
+        upsertedTrainingPlanExercise: TrainingPlanExercise
     ) {
-        val index = data.indexOfFirst { it.exercise.id == trainingPlanExercise.exercise.id }
+        val index =
+            oldTrainingPlanExercises.indexOfFirst { it.exercise.id == upsertedTrainingPlanExercise.exercise.id }
 
         val updatedList = if (index == -1) {
-            data.toMutableList().apply {
-                add(trainingPlanExercise)
+            oldTrainingPlanExercises.toMutableList().apply {
+                add(upsertedTrainingPlanExercise)
             }
         } else {
-            data.toMutableList().apply {
-                this[index] = trainingPlanExercise
+            oldTrainingPlanExercises.toMutableList().apply {
+                this[index] = upsertedTrainingPlanExercise
             }
         }
+
+        updateTrainingPlan(updatedList)
+    }
+
+    private suspend fun updateTrainingPlan(updatedList: MutableList<TrainingPlanExercise>) {
         val trainingPlanSets = mutableListOf<TrainingPlanSet>()
         for (item in updatedList) {
             trainingPlanSets.addAll(item.trainingPlanSets)
         }
 
-        trainingPlanRepo.upsertTrainingPlanItems(trainingPlanSets)
+        trainingPlanRepo.updateTrainingPlan(trainingPlanSets)
     }
 
     fun createNewTrainingPlanExercise() {
@@ -97,7 +103,49 @@ class TrainingPlanViewModel @Inject constructor(
         snackbarMessageEvent.value = R.string.delete_exercise_completed
     }
 
-    fun getUsingExerciseIds(): List<String>? {
+    fun moveUpTrainingPlanExercise(trainingPlanExercise: TrainingPlanExercise) {
+        viewModelScope.launch {
+            val result = trainingPlanRepo.getTrainingPlan()
+
+            if (result is Result.Success) {
+                val list = result.data
+                val index = list.indexOfFirst { it.exercise.id == trainingPlanExercise.exercise.id }
+                if (index == 0)
+                    return@launch
+
+                val updatedList = list.toMutableList().apply {
+                    val temp = this[index]
+                    this[index] = this[index - 1]
+                    this[index - 1] = temp
+                }
+
+                updateTrainingPlan(updatedList)
+            }
+        }
+    }
+
+    fun moveDownTrainingPlanExercise(trainingPlanExercise: TrainingPlanExercise) {
+        viewModelScope.launch {
+            val result = trainingPlanRepo.getTrainingPlan()
+
+            if (result is Result.Success) {
+                val list = result.data
+                val index = list.indexOfFirst { it.exercise.id == trainingPlanExercise.exercise.id }
+                if (index == list.size - 1)
+                    return@launch
+
+                val updatedList = list.toMutableList().apply {
+                    val temp = this[index]
+                    this[index] = this[index + 1]
+                    this[index + 1] = temp
+                }
+
+                updateTrainingPlan(updatedList)
+            }
+        }
+    }
+
+    fun getUsedExerciseIds(): List<String>? {
         return if (trainingPlanExercises.value is Result.Success) {
             (trainingPlanExercises.value as? Result.Success)?.data?.map { it.exercise.id.toString() }
         } else null

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/delete_training_plan_exercise"
+        android:title="@string/delete" />
+    <item
+        android:id="@+id/move_up_training_plan_exercise"
+        android:title="@string/move_up" />
+    <item
+        android:id="@+id/move_down_training_plan_exercise"
+        android:title="@string/move_down" />
+</menu>

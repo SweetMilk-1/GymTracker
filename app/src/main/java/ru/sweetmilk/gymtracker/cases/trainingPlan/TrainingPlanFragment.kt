@@ -79,7 +79,7 @@ class TrainingPlanFragment : Fragment() {
             val action =
                 TrainingPlanFragmentDirections.actionTrainingPlanToNavAddEditTrainingPlanExercise(
                     null,
-                    viewModel.getUsingExerciseIds()?.toTypedArray()
+                    viewModel.getUsedExerciseIds()?.toTypedArray()
                 )
             findNavController().navigate(action)
         }
@@ -87,7 +87,7 @@ class TrainingPlanFragment : Fragment() {
             val action =
                 TrainingPlanFragmentDirections.actionTrainingPlanToNavAddEditTrainingPlanExercise(
                     it,
-                    viewModel.getUsingExerciseIds()?.toTypedArray()
+                    viewModel.getUsedExerciseIds()?.toTypedArray()
                 )
             findNavController().navigate(action)
         }

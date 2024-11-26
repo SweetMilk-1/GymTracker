@@ -42,7 +42,7 @@ class TrainingPlanRepoImpl(
         }
     }
 
-    override suspend fun upsertTrainingPlanItems(list: List<TrainingPlanSet>) =
+    override suspend fun updateTrainingPlan(list: List<TrainingPlanSet>) =
         withContext(coroutineContext) {
             for ((index, value) in list.withIndex()) {
                 value.sortNumber = index + 1

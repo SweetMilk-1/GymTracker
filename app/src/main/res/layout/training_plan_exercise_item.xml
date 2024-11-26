@@ -15,32 +15,45 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/exercise_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+
             android:textStyle="bold"
+            android:textSize="18sp"
             tools:text="Упражнение"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/delete_exercise"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/training_plan_exercise_menu"/>
 
         <ImageView
-            android:id="@+id/delete_exercise"
+            android:id="@+id/training_plan_exercise_menu"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/ic_cross"
-            app:layout_constraintTop_toTopOf="@id/exercise_name"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+
+            android:src="@drawable/ic_dots_vertical"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
             android:id="@+id/training_plan_sets"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintStart_toStartOf="@id/exercise_name"
             app:layout_constraintTop_toBottomOf="@id/exercise_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             tools:text="1 подход: 12 раз\n1 подход: 13 раз" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
