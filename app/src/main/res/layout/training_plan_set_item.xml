@@ -5,6 +5,7 @@
     <data>
 
         <import type="android.text.InputType" />
+
         <import type="android.view.View" />
 
         <variable
@@ -27,6 +28,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/training_plan_set_weight"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -38,11 +40,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number|numberDecimal"
-                android:text="@={itemObservable.weight}"/>
+                android:text="@={itemObservable.weight}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/training_plan_set_duration"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -54,11 +57,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:text="@={itemObservable.duration}"/>
+                android:text="@={itemObservable.duration}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/training_plan_set_count"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
@@ -70,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:text="@={itemObservable.count}"/>
+                android:text="@={itemObservable.count}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageView

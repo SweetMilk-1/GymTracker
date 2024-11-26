@@ -12,10 +12,14 @@
         tools:layout="@layout/frag_exercises">
         <action
             android:id="@+id/action_exercises_to_addEditExercise"
-            app:destination="@id/nav_add_edit_exercise" />
+            app:destination="@id/nav_add_edit_exercise"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
         <action
             android:id="@+id/action_exercises_to_exerciseDetails"
-            app:destination="@id/nav_exercise_details" />
+            app:destination="@id/nav_exercise_details"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
         <argument
             android:name="message"
             android:defaultValue="0"
@@ -38,6 +42,8 @@
         <action
             android:id="@+id/action_addEditExercise_to_exerciseDetails"
             app:destination="@id/nav_exercise_details"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
             app:popUpTo="@id/nav_exercises" />
     </fragment>
 
@@ -60,11 +66,15 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_exerciseDetails_to_addEditExercise"
-            app:destination="@id/nav_add_edit_exercise" />
+            app:destination="@id/nav_add_edit_exercise"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
 
         <action
             android:id="@+id/action_exerciseDetails_to_exercises"
-            app:destination="@id/nav_exercises" />
+            app:destination="@id/nav_exercises"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
 
     <fragment
@@ -81,7 +91,9 @@
 
         <action
             android:id="@+id/action_trainingPlan_to_nav_addEditTrainingPlanExercise"
-            app:destination="@id/nav_add_edit_training_plan_exercise" />
+            app:destination="@id/nav_add_edit_training_plan_exercise"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
 
     <fragment
@@ -93,8 +105,10 @@
         <action
             android:id="@+id/action_addEditTrainingPlanExercise_to_trainingPlan"
             app:destination="@id/nav_training_plan"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
             app:popUpTo="@id/nav_training_plan"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
 
         <argument
             android:name="trainingPlanExercise"

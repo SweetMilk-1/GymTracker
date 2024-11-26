@@ -75,8 +75,9 @@ class TrainingPlanViewModel @Inject constructor(
                 this[index] = upsertedTrainingPlanExercise
             }
         }
-
         updateTrainingPlan(updatedList)
+
+        snackbarMessageEvent.value = R.string.exercise_saved
     }
 
     private suspend fun updateTrainingPlan(updatedList: MutableList<TrainingPlanExercise>) {
