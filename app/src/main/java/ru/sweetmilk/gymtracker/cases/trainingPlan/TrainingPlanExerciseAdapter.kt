@@ -84,7 +84,7 @@ class ExerciseAndTrainingPlanItemsAdapter(
                                     true
                                 }
 
-                                else -> false
+                                else -> true
                             }
                         }
                     }

@@ -1,4 +1,4 @@
-package ru.sweetmilk.gymtracker.data.database
+package ru.sweetmilk.gymtracker.data.database.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

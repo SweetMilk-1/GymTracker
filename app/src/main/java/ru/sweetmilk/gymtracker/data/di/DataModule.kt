@@ -6,8 +6,10 @@ import dagger.Provides
 import ru.sweetmilk.gymtracker.data.database.AppDatabase
 import ru.sweetmilk.gymtracker.data.repositories.TrainingPlanRepo
 import ru.sweetmilk.gymtracker.data.repositories.ExerciseRepo
+import ru.sweetmilk.gymtracker.data.repositories.TrainingRepo
 import ru.sweetmilk.gymtracker.data.repositories.impl.TrainingPlanRepoImpl
 import ru.sweetmilk.gymtracker.data.repositories.impl.ExerciseRepoImpl
+import ru.sweetmilk.gymtracker.data.repositories.impl.TrainingRepoImpl
 import javax.inject.Singleton
 import kotlin.coroutines.CoroutineContext
 
@@ -36,5 +38,14 @@ class DataModule {
         coroutineContext: CoroutineContext
     ): TrainingPlanRepo {
         return TrainingPlanRepoImpl(database, coroutineContext)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTrainingRepo(
+        database: AppDatabase,
+        coroutineContext: CoroutineContext
+    ): TrainingRepo {
+        return TrainingRepoImpl(database, coroutineContext)
     }
 }
