@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import ru.sweetmilk.gymtracker.GymApplication
+import ru.sweetmilk.gymtracker.data.Result
 import ru.sweetmilk.gymtracker.databinding.FragTrainingsBinding
 import javax.inject.Inject
 
@@ -24,6 +25,7 @@ class TrainingsFragment : Fragment() {
     private var _binding: FragTrainingsBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var adapter: TrainingsAdapter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -44,6 +46,17 @@ class TrainingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
+        adapter = TrainingsAdapter(viewModel, layoutInflater)
+        binding.trainingsList.adapter = adapter
+
+        viewModel.items.observe(viewLifecycleOwner) {
+            if (it is Result.Success)
+                adapter.submitList(it.data)
+        }
     }
 
     override fun onDestroyView() {

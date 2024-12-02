@@ -1,43 +1,46 @@
 package ru.sweetmilk.gymtracker.cases.trainings
 
+import android.icu.text.DateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import ru.sweetmilk.gymtracker.data.entities.Exercise
-import ru.sweetmilk.gymtracker.databinding.ExerciseItemBinding
+import ru.sweetmilk.gymtracker.data.entities.Training
+import ru.sweetmilk.gymtracker.databinding.TrainingItemBinding
 
 class TrainingsAdapter(
     private val viewModel: TrainingsViewModel,
     private val inflater: LayoutInflater
 ) :
-    ListAdapter<Exercise, ExerciseViewHolder>(ExerciseItemDiffUtilCallback) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseViewHolder {
-        val binding = ExerciseItemBinding.inflate(inflater, parent, false)
-        return ExerciseViewHolder(binding)
+    ListAdapter<Training, TrainingViewHolder>(TrainingItemDiffUtilCallback) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrainingViewHolder {
+        val binding = TrainingItemBinding.inflate(inflater, parent, false)
+        return TrainingViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ExerciseViewHolder, position: Int) {
-        val exercise = getItem(position)
-        holder.bind(exercise, viewModel)
+    override fun onBindViewHolder(holder: TrainingViewHolder, position: Int) {
+        val training = getItem(position)
+        holder.bind(training)
     }
 }
 
-class ExerciseViewHolder(private val binding: ExerciseItemBinding) : ViewHolder(binding.root) {
+class TrainingViewHolder(private val binding: TrainingItemBinding) : ViewHolder(binding.root) {
     fun bind(
-        exercise: Exercise,
-        viewModel: TrainingsViewModel
+        training: Training,
     ) {
+        val dateString =
+            DateFormat.getPatternInstance(DateFormat.YEAR_ABBR_MONTH).format(training.date);
+        binding.trainingDate.text = dateString
     }
 }
 
-object ExerciseItemDiffUtilCallback : DiffUtil.ItemCallback<Exercise>() {
-    override fun areItemsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
+object TrainingItemDiffUtilCallback : DiffUtil.ItemCallback<Training>() {
+    override fun areItemsTheSame(oldItem: Training, newItem: Training): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
+    override fun areContentsTheSame(oldItem: Training, newItem: Training): Boolean {
         return oldItem == newItem
     }
 }

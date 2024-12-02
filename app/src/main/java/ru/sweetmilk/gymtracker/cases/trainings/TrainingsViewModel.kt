@@ -1,23 +1,23 @@
 package ru.sweetmilk.gymtracker.cases.trainings
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
-import ru.sweetmilk.gymtracker.SingleLiveEvent
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import ru.sweetmilk.gymtracker.data.Result
-import ru.sweetmilk.gymtracker.data.entities.Exercise
-import ru.sweetmilk.gymtracker.data.repositories.ExerciseRepo
+import ru.sweetmilk.gymtracker.data.entities.Training
+import ru.sweetmilk.gymtracker.data.repositories.TrainingRepo
 import java.util.UUID
 import javax.inject.Inject
 
 typealias OpenExercisesParameters = Pair<UUID, String>
 
 class TrainingsViewModel @Inject constructor(
-    exerciseRepo: ExerciseRepo
+    private val trainingRepo: TrainingRepo
 ) : ViewModel() {
     //LiveData
-    val items: LiveData<Result<List<Exercise>>> = exerciseRepo.getAllExercisesObservable()
+    val items: LiveData<Result<List<Training>>> = trainingRepo.getAllTrainingsObservable()
 
     val isEmpty: LiveData<Boolean> = items.map {
         when (it) {
@@ -26,28 +26,10 @@ class TrainingsViewModel @Inject constructor(
         }
     }
 
-    private val _isLoading = MutableLiveData(false)
-    val isLoading: LiveData<Boolean> get() = _isLoading
-
-    //Events
-    val createNewExerciseEvent = SingleLiveEvent<Unit>()
-    val openExerciseEvent = SingleLiveEvent<OpenExercisesParameters>()
-    val showSnackBarEvent = SingleLiveEvent<Int>()
-
-    private var resultMessageShown = false
-
-    fun createNewExercise() {
-        createNewExerciseEvent.value = Unit
-    }
-
-    fun openExercise(id: UUID, title: String) {
-        openExerciseEvent.value = OpenExercisesParameters(id, title)
-    }
-
-    fun showResultMessage(message: Int) {
-        if (resultMessageShown || message == 0)
-            return
-        showSnackBarEvent.value = message
-        resultMessageShown = true
+    fun createNewTraining() {
+        val training = Training()
+        viewModelScope.launch {
+            trainingRepo.upsertTraining(training)
+        }
     }
 }
