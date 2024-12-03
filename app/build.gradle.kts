@@ -19,7 +19,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
+        vectorDrawables.useSupportLibrary = true
+        
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments["room.schemaLocation"] =
@@ -47,6 +48,7 @@ android {
     buildFeatures {
         dataBinding = true
         viewBinding = true
+
     }
 }
 

@@ -9,12 +9,21 @@
         <item name="colorPrimaryVariant">@color/blue_500</item>
         <item name="colorOnPrimary">@color/beige_200</item>
 
+        <!-- Bottom sheet color. -->
+        <item name="colorSurfaceContainerLow">@color/beige_700</item>
+
+        <!-- Card color-->
+        <item name="colorSurfaceContainerHighest">@color/beige_700</item>
+
+        <!-- Floating action Button color-->
+        <item name="colorPrimaryContainer">?attr/colorSecondary</item>
+        <item name="colorOnPrimaryContainer">?attr/colorOnSecondary</item>
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+
         <item name="android:windowBackground">@color/beige_200</item>
-
         <item name="android:textColor">?attr/colorPrimaryVariant</item>
-
     </style>
 
 

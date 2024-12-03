@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil.ItemCallback
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ru.sweetmilk.gymtracker.R
 import ru.sweetmilk.gymtracker.data.entities.TrainingPlanExercise
@@ -113,7 +112,7 @@ class ExerciseAndTrainingPlanItemsAdapter(
         private fun getApproachWithDurationText(res: Resources) =
             trainingPlanExercise.trainingPlanSets.mapIndexed { index, it ->
                 res.getString(
-                    R.string.approach_with_duration,
+                    R.string.set_with_duration,
                     index + 1
                 ) + res.getQuantityString(
                     R.plurals.seconds,
@@ -134,7 +133,7 @@ class ExerciseAndTrainingPlanItemsAdapter(
         private fun getApproachWithoutDurationText(res: Resources) =
             trainingPlanExercise.trainingPlanSets.mapIndexed { index, it ->
                 res.getString(
-                    R.string.approach_without_duration,
+                    R.string.set_without_duration,
                     index + 1,
                     it.weight ?: 0f
                 ) + res.getQuantityString(
@@ -147,7 +146,7 @@ class ExerciseAndTrainingPlanItemsAdapter(
         private fun getOnceApproachWithoutDurationText(res: Resources) =
             trainingPlanExercise.trainingPlanSets.mapIndexed { index, it ->
                 res.getString(
-                    R.string.approach_without_duration_once,
+                    R.string.set_without_duration_once,
                     it.weight ?: 0f
                 ) + res.getQuantityString(
                     R.plurals.count,

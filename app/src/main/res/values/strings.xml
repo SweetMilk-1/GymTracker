@@ -30,8 +30,9 @@
     <string name="count">Раз</string>
     <string name="duration">Сек</string>
     <string name="save_button">Сохранить</string>
-    <string name="approach_without_duration">%1$d подход: %2$.2f кг —\u0020</string>
-    <string name="approach_without_duration_once">%1$.1f кг —\u0020</string>
-    <string name="approach_with_duration">%1$d подход:\u0020</string>
+    <string name="set_without_duration">%1$d подход: %2$.2f кг —\u0020</string>
+    <string name="set_without_duration_once">%1$.1f кг —\u0020</string>
+    <string name="set_with_duration">%1$d подход:\u0020</string>
     <string name="start_training">Начать тренировку</string>
+    <string name="past_trainings">Предыдущие тренировки</string>
 </resources>
