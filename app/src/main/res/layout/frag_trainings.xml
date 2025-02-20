@@ -8,44 +8,36 @@
 
         <variable
             name="viewModel"
-            type="ru.sweetmilk.gymtracker.cases.trainings.TrainingsViewModel" />
+            type="ru.sweetmilk.gymtracker.fragments.trainings.TrainingsViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/start_training_btn_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageButton
-                android:id="@+id/start_training_image_btn"
-                style="@style/StartTrainingButton"
-                android:layout_width="@dimen/start_training_btn_size"
-                android:layout_height="@dimen/start_training_btn_size"
-                android:layout_gravity="center"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/start_training_label"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/start_training_button"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableLeft="@drawable/ic_start"
+                android:padding="16dp"
                 android:text="@string/start_training"
                 android:textAllCaps="true"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+                android:textSize="20sp"
+                android:onClick="@{() -> viewModel.startTraining()}"/>
+        </FrameLayout>
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/bottom_sheet"
             style="@style/Widget.Material3.BottomSheet"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/bottom_sheet_expanded_height"
+            android:layout_height="match_parent"
             android:padding="4dp"
             app:behavior_hideable="false"
             app:behavior_peekHeight="@dimen/bottom_sheet_collapsed_height"

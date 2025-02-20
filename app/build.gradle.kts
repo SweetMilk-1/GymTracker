@@ -75,4 +75,7 @@ dependencies {
     implementation(libs.dagger)
     ksp(libs.dagger.compiler)
 
+    //Gson
+    implementation(libs.gson)
+    
 }

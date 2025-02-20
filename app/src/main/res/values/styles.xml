@@ -2,7 +2,7 @@
 <resources>
 
     <style name="StartTrainingButton" parent="Theme.Material3.Light">
-        <item name="android:background">@drawable/start_training_button_with_ripple</item>
+        <item name="android:background">@drawable/ic_start</item>
         <item name="elevation">64dp</item>
     </style>
 </resources>

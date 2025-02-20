@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="ru.sweetmilk.gymtracker.cases.exerciseDetails.ExerciseDetailsViewModel" />
+            type="ru.sweetmilk.gymtracker.fragments.exerciseDetails.ExerciseDetailsViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

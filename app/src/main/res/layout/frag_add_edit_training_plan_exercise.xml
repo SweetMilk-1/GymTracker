@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="ru.sweetmilk.gymtracker.cases.addEditTrainingPlanExercise.AddEditTrainingPlanExerciseViewModel" />
+            type="ru.sweetmilk.gymtracker.fragments.addEditTrainingPlanExercise.AddEditTrainingPlanExerciseViewModel" />
     </data>
 
     <FrameLayout

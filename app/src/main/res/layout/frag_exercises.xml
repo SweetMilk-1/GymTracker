@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="ru.sweetmilk.gymtracker.cases.exercises.ExercisesViewModel" />
+            type="ru.sweetmilk.gymtracker.fragments.exercises.ExercisesViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"

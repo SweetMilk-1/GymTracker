@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_exercises"
-        android:name="ru.sweetmilk.gymtracker.cases.exercises.ExercisesFragment"
+        android:name="ru.sweetmilk.gymtracker.fragments.exercises.ExercisesFragment"
         android:label="@string/menu_exercises"
         tools:layout="@layout/frag_exercises">
         <action
@@ -28,7 +28,7 @@
 
     <fragment
         android:id="@+id/nav_add_edit_exercise"
-        android:name="ru.sweetmilk.gymtracker.cases.addEditExercise.AddEditExerciseFragment"
+        android:name="ru.sweetmilk.gymtracker.fragments.addEditExercise.AddEditExerciseFragment"
         android:label="{title}"
         tools:layout="@layout/frag_add_edit_exercise">
         <argument
@@ -49,7 +49,7 @@
 
     <fragment
         android:id="@+id/nav_exercise_details"
-        android:name="ru.sweetmilk.gymtracker.cases.exerciseDetails.ExerciseDetailsFragment"
+        android:name="ru.sweetmilk.gymtracker.fragments.exerciseDetails.ExerciseDetailsFragment"
         android:label="{title}"
         tools:layout="@layout/frag_exercise_details">
         <argument
@@ -79,7 +79,7 @@
 
     <fragment
         android:id="@+id/nav_training_plan"
-        android:name="ru.sweetmilk.gymtracker.cases.trainingPlan.TrainingPlanFragment"
+        android:name="ru.sweetmilk.gymtracker.fragments.trainingPlan.TrainingPlanFragment"
         android:label="@string/menu_training_plan"
         tools:layout="@layout/frag_training_plan">
 
@@ -98,7 +98,7 @@
 
     <fragment
         android:id="@+id/nav_add_edit_training_plan_exercise"
-        android:name="ru.sweetmilk.gymtracker.cases.addEditTrainingPlanExercise.AddEditTrainingPlanExerciseFragment"
+        android:name="ru.sweetmilk.gymtracker.fragments.addEditTrainingPlanExercise.AddEditTrainingPlanExerciseFragment"
         android:label="@string/add_exercise_label"
         tools:layout="@layout/add_new_training_plan_set_button">
 
@@ -124,7 +124,7 @@
 
     <fragment
         android:id="@+id/nav_trainings"
-        android:name="ru.sweetmilk.gymtracker.cases.trainings.TrainingsFragment"
+        android:name="ru.sweetmilk.gymtracker.fragments.trainings.TrainingsFragment"
         android:label="@string/menu_trainings"
         tools:layout="@layout/frag_training_plan">
     </fragment>

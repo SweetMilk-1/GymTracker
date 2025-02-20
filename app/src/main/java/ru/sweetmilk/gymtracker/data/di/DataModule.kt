@@ -10,6 +10,8 @@ import ru.sweetmilk.gymtracker.data.repositories.TrainingRepo
 import ru.sweetmilk.gymtracker.data.repositories.impl.TrainingPlanRepoImpl
 import ru.sweetmilk.gymtracker.data.repositories.impl.ExerciseRepoImpl
 import ru.sweetmilk.gymtracker.data.repositories.impl.TrainingRepoImpl
+import ru.sweetmilk.gymtracker.data.sharedpref.TrainingStatePref
+import ru.sweetmilk.gymtracker.data.sharedpref.TrainingStatePrefImpl
 import javax.inject.Singleton
 import kotlin.coroutines.CoroutineContext
 
@@ -47,5 +49,13 @@ class DataModule {
         coroutineContext: CoroutineContext
     ): TrainingRepo {
         return TrainingRepoImpl(database, coroutineContext)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTrainingSharedPreferences(
+        appContext: Context
+    ): TrainingStatePref {
+        return TrainingStatePrefImpl(appContext)
     }
 }

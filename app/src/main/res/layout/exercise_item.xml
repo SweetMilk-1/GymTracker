@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="ru.sweetmilk.gymtracker.cases.exercises.ExercisesViewModel" />
+            type="ru.sweetmilk.gymtracker.fragments.exercises.ExercisesViewModel" />
 
         <variable
             name="exercise"
